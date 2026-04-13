@@ -1437,7 +1437,7 @@
   <!-- ============================================================
     MODAL — Contact form
     FORMSPREE: Sign up at formspree.io → New Form → copy the form ID
-    → replace YOURFORMID in the JS below (search "YOURFORMID").
+    → replace xdaynrqv in the JS below (search "xdaynrqv").
     Free tier = 50 submissions/month, sends to your email.
     Connect Google Sheets via Zapier in ~5 min (see README).
   ============================================================ -->
@@ -1682,11 +1682,11 @@
           message: document.getElementById('f-msg').value.trim()
         };
 
-        /* FORMSPREE: Replace YOURFORMID with your Formspree form ID.
+        /* FORMSPREE: Replace xdaynrqv with your Formspree form ID.
            Sign up at formspree.io → New Form → copy the ID (looks like xabc1234).
            Free tier = 50 submissions/month. Sends to your inbox.
            Connect Google Sheets: formspree.io → Integrations → or use Zapier. */
-        fetch('https://formspree.io/f/YOURFORMID', {
+        fetch('https://formspree.io/f/xdaynrqv', {
           method:  'POST',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
           body:    JSON.stringify(payload)
