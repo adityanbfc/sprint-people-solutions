@@ -652,17 +652,35 @@
     .footer-email a:hover { color: var(--white); }
 
     .footer-bottom {
-      text-align: center;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 28px 0;
+      font-size: 15px;
       font-weight: 300;
       color: rgba(255,255,255,0.28);
     }
+    .footer-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.28);
+    }
+    .footer-legal-links a {
+      color: rgba(255,255,255,0.28);
+      transition: color 0.2s ease;
+    }
+    .footer-legal-links a:hover { color: rgba(255,255,255,0.7); }
 
     @media (max-width: 768px) {
       .footer { padding: 56px var(--gm) 40px; }
       .footer-top { grid-template-columns: 1fr; text-align: center; gap: 24px; }
       .footer-email { text-align: center; }
       .footer-nav { justify-content: center; }
+      .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
     }
 
     /* ====================================================
@@ -1134,7 +1152,14 @@
       </div>
 
       <!-- EDIT: Update copyright year -->
-      <div class="footer-bottom">&copy; 2026 Sprint People Solutions</div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Sprint People Solutions</span>
+        <span class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span>&middot;</span>
+          <a href="terms.html">Terms of Use</a>
+        </span>
+      </div>
     </div>
   </footer>
 

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Sprint People Solutions</title>
+  <meta name="description" content="Privacy Policy for Sprint People Solutions. How we collect, use, and protect your personal data." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@900&family=Hanken+Grotesk:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+
+    /* ====================================================
+       DESIGN TOKENS
+    ==================================================== */
+    :root {
+      --white:      #FFFFFF;
+      --cream:      #F5F0E8;
+      --navy:       #1A1A2E;
+      --navy-mid:   #252640;
+      --gold:       #C9A84C;
+      --gold-light: rgba(201,168,76,0.12);
+      --font-head:  'Epilogue', sans-serif;
+      --font-body:  'Hanken Grotesk', sans-serif;
+      --max-w:      1200px;
+      --g:          48px;
+      --gm:         24px;
+    }
+
+    /* ====================================================
+       RESET & BASE
+    ==================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.65;
+      background: var(--white);
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 { font-family: var(--font-head); font-weight: 900; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: var(--font-body); }
+    ul { list-style: none; }
+
+    /* ====================================================
+       TYPOGRAPHY
+    ==================================================== */
+    .lbl {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    /* ====================================================
+       BUTTONS
+    ==================================================== */
+    .btn-primary {
+      display: inline-block;
+      background: var(--navy);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      padding: 16px 40px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.25s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+
+    /* ====================================================
+       FADE-UP SCROLL ANIMATIONS
+    ==================================================== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    .stagger > .fade-up:nth-child(1) { transition-delay: 0.00s; }
+    .stagger > .fade-up:nth-child(2) { transition-delay: 0.10s; }
+    .stagger > .fade-up:nth-child(3) { transition-delay: 0.20s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .h-anim {
+      opacity: 0;
+      animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .h-anim-1 { animation-delay: 0.00s; }
+    .h-anim-2 { animation-delay: 0.15s; }
+    .h-anim-3 { animation-delay: 0.30s; }
+
+    /* ====================================================
+       NAV
+    ==================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 300;
+      background: var(--cream);
+      transition: box-shadow 0.3s ease;
+    }
+    .nav.raised { box-shadow: 0 2px 24px rgba(26,26,46,0.10); }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--g);
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo svg { flex-shrink: 0; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.50;
+      transition: opacity 0.2s ease;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-cta {
+      font-size: 16px !important;
+      font-weight: 400;
+      opacity: 1 !important;
+      color: var(--navy) !important;
+      border: 1px solid var(--navy) !important;
+      padding: 10px 20px;
+      transition: background 0.25s ease, color 0.25s ease !important;
+    }
+    .nav-cta:hover {
+      background: var(--navy) !important;
+      color: var(--white) !important;
+    }
+
+    .nav-ham {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-ham span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--navy);
+      transition: all 0.28s ease;
+      transform-origin: center;
+    }
+    .nav-ham.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-ham.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-ham.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 var(--gm); }
+      .nav-ham { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: var(--cream);
+        border-bottom: 1px solid rgba(26,26,46,0.08);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px var(--gm);
+        gap: 18px;
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ====================================================
+       BACK BAR
+    ==================================================== */
+    .back-bar {
+      background: var(--cream);
+      border-bottom: 1px solid rgba(26,26,46,0.08);
+      padding: 18px var(--g);
+    }
+    .back-bar a {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .back-bar a:hover { opacity: 1; }
+    .back-bar .back-arrow { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .back-bar { padding: 16px var(--gm); }
+    }
+
+    /* ====================================================
+       LEGAL HERO — cream background
+    ==================================================== */
+    .legal-hero {
+      background: var(--cream);
+      padding: 96px var(--g) 80px;
+    }
+    .legal-hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .legal-h1 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .legal-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--navy);
+      opacity: 0.65;
+    }
+
+    @media (max-width: 768px) {
+      .legal-hero { padding: 64px var(--gm) 56px; }
+      .legal-h1 { font-size: clamp(32px, 9vw, 52px); }
+    }
+
+    /* ====================================================
+       LEGAL CONTENT — white background
+    ==================================================== */
+    .legal-content {
+      background: var(--white);
+      padding: 80px var(--g) 100px;
+    }
+    .legal-content-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .legal-section {
+      margin-bottom: 48px;
+    }
+    .legal-section:last-child { margin-bottom: 0; }
+
+    .legal-section h3 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 24px;
+      color: var(--navy);
+      letter-spacing: -0.015em;
+      margin-bottom: 16px;
+    }
+
+    .legal-section p {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+
+    .legal-section ul {
+      list-style: disc;
+      padding-left: 24px;
+      margin-top: 10px;
+      margin-bottom: 14px;
+    }
+    .legal-section ul li {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1.75;
+      margin-bottom: 8px;
+    }
+
+    .legal-section a {
+      color: var(--navy);
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 1px;
+      transition: opacity 0.2s ease;
+    }
+    .legal-section a:hover { opacity: 0.7; }
+
+    @media (max-width: 768px) {
+      .legal-content { padding: 56px var(--gm) 72px; }
+      .legal-section h3 { font-size: 20px; }
+      .legal-section p,
+      .legal-section ul li { font-size: 17px; }
+    }
+
+    /* ====================================================
+       FOOTER — navy background
+    ==================================================== */
+    .footer {
+      background: var(--navy);
+      padding: 72px var(--g) 0;
+    }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 0 56px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .footer-brand-logo svg { flex-shrink: 0; }
+
+    .footer-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.8;
+    }
+
+    .footer-col-head {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .footer-links a {
+      font-size: 16px;
+      color: rgba(255,255,255,0.58);
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.5;
+    }
+    .footer-contact-item a {
+      color: rgba(255,255,255,0.58);
+      transition: color 0.2s ease;
+    }
+    .footer-contact-item a:hover { color: var(--white); }
+    .footer-contact-icon {
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .footer-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      padding: 56px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-cta-label {
+      display: block;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .footer-cta-h {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(26px, 3vw, 42px);
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .btn-footer-cta {
+      flex-shrink: 0;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      padding: 16px 40px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.25s ease;
+    }
+    .btn-footer-cta:hover { opacity: 0.85; }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 28px 0;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.28);
+    }
+    .footer-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.28);
+    }
+    .footer-legal-links a {
+      color: rgba(255,255,255,0.28);
+      transition: color 0.2s ease;
+    }
+    .footer-legal-links a:hover { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 40px; }
+    }
+    @media (max-width: 768px) {
+      .footer { padding: 56px var(--gm) 0; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 48px; }
+      .footer-cta { flex-direction: column; align-items: flex-start; gap: 24px; padding: 40px 0; }
+      .btn-footer-cta { width: 100%; text-align: center; }
+      .footer-cta-h { font-size: clamp(22px, 6vw, 32px); }
+      .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+    }
+
+    /* ====================================================
+       MODAL
+    ==================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(26,26,46,0.88);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-panel {
+      background: var(--white);
+      max-width: 520px;
+      width: 100%;
+      padding: 56px 48px;
+      position: relative;
+      max-height: 92vh;
+      overflow-y: auto;
+      transform: translateY(24px);
+      transition: transform 0.30s ease;
+    }
+    .modal-overlay.open .modal-panel { transform: none; }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 22px;
+      background: none;
+      border: none;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--navy);
+      opacity: 0.38;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: opacity 0.2s ease;
+    }
+    .modal-close:hover { opacity: 1; }
+
+    .modal-h3 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -0.025em;
+      color: var(--navy);
+      line-height: 1.05;
+      margin-bottom: 32px;
+    }
+
+    .f-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .f-group { margin-bottom: 18px; }
+
+    .f-group label {
+      display: block;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--navy);
+      opacity: 0.52;
+      margin-bottom: 8px;
+    }
+
+    .f-group input,
+    .f-group select,
+    .f-group textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--navy);
+      background: var(--white);
+      border: 1px solid rgba(26,26,46,0.18);
+      padding: 13px 16px;
+      outline: none;
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.2s ease;
+      line-height: 1.5;
+    }
+    .f-group input:focus,
+    .f-group select:focus,
+    .f-group textarea:focus { border-color: var(--gold); }
+
+    .f-group input.f-err,
+    .f-group select.f-err,
+    .f-group textarea.f-err { border-color: #b03025; }
+    .f-errmsg {
+      display: none;
+      font-size: 16px;
+      color: #b03025;
+      margin-top: 5px;
+    }
+    .f-group.has-err .f-errmsg { display: block; }
+
+    .f-group textarea { resize: vertical; min-height: 96px; }
+
+    .f-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%231A1A2E' fill-opacity='0.4' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--navy);
+      color: var(--cream);
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 0.01em;
+      padding: 16px;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.25s ease;
+    }
+    .btn-submit:hover { opacity: 0.85; }
+    .btn-submit:disabled { opacity: 0.40; cursor: not-allowed; }
+
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 40px 0 16px;
+    }
+    .modal-success.show { display: block; }
+    .modal-success .lbl { justify-content: center; margin-bottom: 16px; }
+    .modal-success-h {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -0.025em;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .modal-success-p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--navy);
+      opacity: 0.60;
+      line-height: 1.6;
+    }
+
+    .modal-global-err {
+      display: none;
+      font-size: 16px;
+      color: #b03025;
+      background: rgba(176,48,37,0.06);
+      border: 1px solid rgba(176,48,37,0.16);
+      padding: 11px 14px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+    .modal-global-err.show { display: block; }
+    .modal-global-err a { border-bottom: 1px solid currentColor; }
+
+    @media (max-width: 640px) {
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal-panel { padding: 36px var(--gm); max-height: 100vh; width: 100%; max-width: 100%; border-radius: 0; }
+      .modal-h3 { font-size: 22px; margin-bottom: 24px; }
+      .f-row { grid-template-columns: 1fr; gap: 0; }
+    }
+
+    @media (max-width: 380px) {
+      body { font-size: 16px; }
+      .lbl { font-size: 11px; letter-spacing: 0.14em; }
+      .btn-primary { padding: 14px 28px; font-size: 15px; }
+      .nav-logo { font-size: 18px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="siteNav">
+    <div class="nav-inner">
+
+      <a href="index.html" class="nav-logo">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <polyline points="1,1 9,10 1,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+          <polyline points="9,1 17,10 9,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+        </svg>
+        Sprint
+      </a>
+
+      <button class="nav-ham" id="navHam" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="#" class="nav-cta open-modal">Start a conversation</a>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- BACK BAR -->
+  <div class="back-bar">
+    <a href="index.html">
+      <span class="back-arrow">&larr;</span>
+      Back to home
+    </a>
+  </div>
+
+
+  <!-- HERO -->
+  <section class="legal-hero">
+    <div class="legal-hero-inner">
+      <span class="lbl h-anim h-anim-1">Legal</span>
+      <h1 class="legal-h1 h-anim h-anim-2">Privacy Policy</h1>
+      <p class="legal-sub h-anim h-anim-3">Last updated: April 2026</p>
+    </div>
+  </section>
+
+
+  <!-- CONTENT -->
+  <section class="legal-content">
+    <div class="legal-content-inner">
+
+      <div class="legal-section fade-up">
+        <h3>1. Who We Are</h3>
+        <p>Sprint People Solutions (&ldquo;Sprint&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;) is a recruitment and fractional HR advisory firm based in Mumbai, India. We operate this website at sprintpeople.in and any associated sub-pages.</p>
+        <p>For any privacy-related queries, please contact us at <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a>.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>2. What Data We Collect</h3>
+        <p>We collect personal data only when you voluntarily provide it through our contact form. This may include:</p>
+        <ul>
+          <li>Full name</li>
+          <li>Company name</li>
+          <li>Work email address</li>
+          <li>Phone number (optional)</li>
+          <li>The nature of your enquiry</li>
+          <li>Any additional information you choose to share in the message field</li>
+        </ul>
+        <p>We do not collect data passively through tracking pixels, third-party analytics, or advertising tags on this website.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>3. How We Use Your Data</h3>
+        <p>The information you submit is used solely to:</p>
+        <ul>
+          <li>Respond to your enquiry</li>
+          <li>Assess whether our services are a fit for your needs</li>
+          <li>Communicate with you about next steps, if relevant</li>
+        </ul>
+        <p>We will never use your contact details for unsolicited marketing or share them with third parties for commercial purposes.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>4. Third-Party Services</h3>
+        <p>Our contact form is processed by <strong>Formspree</strong> (formspree.io), a form handling service. When you submit the form, your data is transmitted to Formspree&rsquo;s servers and then forwarded to us by email. Formspree&rsquo;s privacy policy governs how they handle this data in transit.</p>
+        <p>We may also use Google Workspace for internal email and document storage. Data shared with us by email is subject to Google&rsquo;s data processing terms.</p>
+        <p>We do not sell, rent, or trade your personal data to any third party.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>5. Data Retention</h3>
+        <p>We retain your contact details only for as long as is necessary to fulfil the purpose for which they were collected &mdash; typically the duration of an active client conversation or hiring engagement. Enquiries that do not result in an engagement are removed from our records within 12 months.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>6. Your Rights</h3>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Request access to the personal data we hold about you</li>
+          <li>Ask us to correct inaccurate information</li>
+          <li>Request deletion of your data at any time</li>
+          <li>Withdraw consent for us to contact you</li>
+        </ul>
+        <p>To exercise any of these rights, email us at <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a>. We will respond within 30 days.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>7. Cookies</h3>
+        <p>This website does not use cookies, local storage, or any client-side tracking mechanism. No data is stored on your device when you visit this site.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>8. Changes to This Policy</h3>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. The &ldquo;Last updated&rdquo; date at the top of this page indicates when the most recent changes were made. Continued use of the website after any changes constitutes acceptance of the revised policy.</p>
+      </div>
+
+      <div class="legal-section fade-up">
+        <h3>9. Contact Us</h3>
+        <p>If you have any questions about this Privacy Policy or how we handle your data, please reach out:</p>
+        <p><strong>Sprint People Solutions</strong><br>
+        Mumbai, India<br>
+        <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a><br>
+        +91 77009 97802</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+
+      <div class="footer-grid">
+
+        <div>
+          <div class="footer-brand-logo">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <polyline points="1,1 9,10 1,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+              <polyline points="9,1 17,10 9,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+            </svg>
+            Sprint People Solutions
+          </div>
+          <p class="footer-desc">Assessment-led hiring and fractional HR for startups and financial services teams. Founder-led, always. No handoffs. Built for speed and fit.</p>
+        </div>
+
+        <div>
+          <span class="footer-col-head">Quick Links</span>
+          <div class="footer-links">
+            <a href="index.html#services">Services</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <span class="footer-col-head">Services</span>
+          <div class="footer-links">
+            <a href="recruitment.html">Recruitment</a>
+            <a href="fractional-hr.html">Fractional HR</a>
+          </div>
+        </div>
+
+        <div>
+          <span class="footer-col-head">Contact Us</span>
+          <div class="footer-contact-list">
+
+            <div class="footer-contact-item">
+              <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="1" y="3" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M1 5l7 4.5L15 5" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+              <a href="mailto:shreya@sprintpeople.in">Email Us</a>
+            </div>
+
+            <div class="footer-contact-item">
+              <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 1.5h2.5L7 5 5 6.2a8.5 8.5 0 0 0 4.8 4.8L11 9l3.5 1.5V13a1 1 0 0 1-1 1C5.8 14 2 10.2 2 5.5A4 4 0 0 1 3 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+              <span>+91 77009 97802</span>
+            </div>
+
+            <div class="footer-contact-item">
+              <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 1a5 5 0 0 0-5 5c0 3.5 5 9 5 9s5-5.5 5-9a5 5 0 0 0-5-5z" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+              <span>Mumbai, India</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-cta">
+        <div>
+          <span class="footer-cta-label">Get in Touch</span>
+          <div class="footer-cta-h">Ready to start hiring right?</div>
+        </div>
+        <button class="btn-footer-cta open-modal">Start a conversation</button>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Sprint People Solutions</span>
+        <span class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span>&middot;</span>
+          <a href="terms.html">Terms of Use</a>
+        </span>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+    <div class="modal-panel" id="modalPanel">
+
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+
+      <div id="modalForm">
+        <span class="lbl">Start a conversation</span>
+        <h3 class="modal-h3" id="modalHeading">Tell us about your hiring challenge.</h3>
+
+        <form id="contactForm" novalidate>
+
+          <div class="f-row">
+            <div class="f-group" id="fg-name">
+              <label for="f-name">Full name *</label>
+              <input type="text" id="f-name" name="name" autocomplete="name" placeholder="Priya Mehta" />
+              <span class="f-errmsg">Please enter your name.</span>
+            </div>
+            <div class="f-group" id="fg-company">
+              <label for="f-company">Company name *</label>
+              <input type="text" id="f-company" name="company" autocomplete="organization" placeholder="Acme Fintech" />
+              <span class="f-errmsg">Please enter your company.</span>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="f-group" id="fg-email">
+              <label for="f-email">Work email *</label>
+              <input type="email" id="f-email" name="email" autocomplete="email" placeholder="priya@acme.com" />
+              <span class="f-errmsg">Please enter a valid email.</span>
+            </div>
+            <div class="f-group">
+              <label for="f-phone">Phone (optional)</label>
+              <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="+91 98765 43210" />
+            </div>
+          </div>
+
+          <div class="f-group" id="fg-need">
+            <label for="f-need">What do you need? *</label>
+            <select id="f-need" name="need">
+              <option value="" disabled selected>&mdash; Select one</option>
+              <option value="Recruitment">Recruitment</option>
+              <option value="Fractional HR">Fractional HR</option>
+              <option value="Both">Both</option>
+            </select>
+            <span class="f-errmsg">Please select an option.</span>
+          </div>
+
+          <div class="f-group">
+            <label for="f-msg">Tell us about your challenge (optional)</label>
+            <textarea id="f-msg" name="message" rows="3" placeholder="We&rsquo;re scaling from 40 to 100 people and need&hellip;"></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit" id="modalSubmit">Send message &rarr;</button>
+
+          <div class="modal-global-err" id="modalGlobalErr">
+            Something went wrong &mdash; please email
+            <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a> directly.
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-success" id="modalSuccess">
+        <span class="lbl">Message received</span>
+        <div class="modal-success-h">Thank you.</div>
+        <p class="modal-success-p">Shreya will be in touch within 24 hours.</p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+
+    /* ── NAV SCROLL SHADOW ── */
+    (function () {
+      var nav = document.getElementById('siteNav');
+      window.addEventListener('scroll', function () {
+        nav.classList.toggle('raised', window.scrollY > 60);
+      }, { passive: true });
+    }());
+
+
+    /* ── MODAL OPEN / CLOSE ── */
+    (function () {
+      var overlay  = document.getElementById('modalOverlay');
+      var closeBtn = document.getElementById('modalClose');
+      var triggers = document.querySelectorAll('.open-modal');
+
+      function open() {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      triggers.forEach(function (el) {
+        el.addEventListener('click', function (e) { e.preventDefault(); open(); });
+      });
+
+      closeBtn.addEventListener('click', close);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+      });
+    }());
+
+
+    /* ── CONTACT FORM SUBMISSION ── */
+    (function () {
+      var form      = document.getElementById('contactForm');
+      var submitBtn = document.getElementById('modalSubmit');
+      var formWrap  = document.getElementById('modalForm');
+      var success   = document.getElementById('modalSuccess');
+      var globalErr = document.getElementById('modalGlobalErr');
+
+      function check(id, groupId, isEmail) {
+        var el    = document.getElementById(id);
+        var group = document.getElementById(groupId);
+        var val   = (el.value || '').trim();
+        var ok    = isEmail ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) : val.length > 0;
+        el.classList.toggle('f-err', !ok);
+        group.classList.toggle('has-err', !ok);
+        return ok;
+      }
+
+      function validate() {
+        var a = check('f-name',    'fg-name',    false);
+        var b = check('f-company', 'fg-company', false);
+        var c = check('f-email',   'fg-email',   true);
+        var d = check('f-need',    'fg-need',    false);
+        return a && b && c && d;
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validate()) return;
+
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Sending\u2026';
+        globalErr.classList.remove('show');
+
+        var payload = {
+          name:    document.getElementById('f-name').value.trim(),
+          company: document.getElementById('f-company').value.trim(),
+          email:   document.getElementById('f-email').value.trim(),
+          phone:   document.getElementById('f-phone').value.trim(),
+          need:    document.getElementById('f-need').value,
+          message: document.getElementById('f-msg').value.trim()
+        };
+
+        fetch('https://formspree.io/f/xdaynrqv', {
+          method:  'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload)
+        })
+        .then(function (res) {
+          if (res.ok) {
+            formWrap.style.display = 'none';
+            success.classList.add('show');
+          } else {
+            throw new Error('server');
+          }
+        })
+        .catch(function () {
+          globalErr.classList.add('show');
+          submitBtn.disabled    = false;
+          submitBtn.textContent = 'Send message \u2192';
+        });
+      });
+    }());
+
+
+    /* ── SCROLL FADE-UP ── */
+    (function () {
+      var els = document.querySelectorAll('.fade-up');
+
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.10 });
+
+      els.forEach(function (el) { io.observe(el); });
+    }());
+
+
+    /* ── MOBILE NAV TOGGLE ── */
+    (function () {
+      var btn   = document.getElementById('navHam');
+      var links = document.getElementById('navLinks');
+
+      btn.addEventListener('click', function () {
+        var open = links.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+
+      links.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          links.classList.remove('open');
+          btn.classList.remove('open');
+          btn.setAttribute('aria-label', 'Open menu');
+        });
+      });
+    }());
+
+  </script>
+</body>
+</html>
