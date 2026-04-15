@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@900&family=Hanken+Grotesk:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <!-- Calendly inline widget -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
   <style>
 
@@ -643,6 +645,7 @@
     /* ====================================================
        MODAL
     ==================================================== */
+    /* ── MODAL ── */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -658,13 +661,15 @@
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
     .modal-panel {
-      background: var(--white);
-      max-width: 520px;
+      background: var(--cream);
+      max-width: 760px;
       width: 100%;
-      padding: 56px 48px;
+      padding: 48px 48px 0;
       position: relative;
       max-height: 92vh;
       overflow-y: auto;
@@ -672,10 +677,10 @@
       transition: transform 0.30s ease;
     }
     .modal-overlay.open .modal-panel { transform: none; }
-
     .modal-close {
       position: absolute;
-      top: 20px; right: 22px;
+      top: 20px;
+      right: 22px;
       background: none;
       border: none;
       font-size: 26px;
@@ -685,9 +690,9 @@
       cursor: pointer;
       padding: 4px 8px;
       transition: opacity 0.2s ease;
+      z-index: 10;
     }
     .modal-close:hover { opacity: 1; }
-
     .modal-h3 {
       font-family: var(--font-head);
       font-weight: 900;
@@ -695,104 +700,20 @@
       letter-spacing: -0.025em;
       color: var(--navy);
       line-height: 1.05;
-      margin-bottom: 32px;
-    }
-
-    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .f-group { margin-bottom: 18px; }
-
-    .f-group label {
-      display: block;
-      font-size: 16px;
-      font-weight: 400;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: var(--navy);
-      opacity: 0.52;
       margin-bottom: 8px;
     }
-
-    .f-group input,
-    .f-group select,
-    .f-group textarea {
-      width: 100%;
-      font-family: var(--font-body);
-      font-weight: 300;
-      font-size: 15px;
-      color: var(--navy);
-      background: var(--white);
-      border: 1px solid rgba(26,26,46,0.18);
-      padding: 13px 16px;
-      outline: none;
-      border-radius: 0;
-      appearance: none;
-      -webkit-appearance: none;
-      transition: border-color 0.2s ease;
-      line-height: 1.5;
-    }
-    .f-group input:focus,
-    .f-group select:focus,
-    .f-group textarea:focus { border-color: var(--gold); }
-
-    .f-group input.f-err,
-    .f-group select.f-err,
-    .f-group textarea.f-err { border-color: #b03025; }
-    .f-errmsg { display: none; font-size: 16px; color: #b03025; margin-top: 5px; }
-    .f-group.has-err .f-errmsg { display: block; }
-    .f-group textarea { resize: vertical; min-height: 96px; }
-
-    .f-group select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%231A1A2E' fill-opacity='0.4' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
-    }
-
-    .btn-submit {
-      width: 100%;
-      background: var(--navy);
-      color: var(--cream);
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: 15px;
-      padding: 16px;
-      border: none;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: opacity 0.25s ease;
-    }
-    .btn-submit:hover { opacity: 0.85; }
-    .btn-submit:disabled { opacity: 0.40; cursor: not-allowed; }
-
-    .modal-success { display: none; text-align: center; padding: 40px 0 16px; }
-    .modal-success.show { display: block; }
-    .modal-success .lbl { margin-bottom: 16px; }
-    .modal-success-h {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: 28px;
-      letter-spacing: -0.025em;
-      color: var(--navy);
-      margin-bottom: 12px;
-    }
-    .modal-success-p { font-size: 16px; font-weight: 300; color: var(--navy); opacity: 0.60; line-height: 1.6; }
-
-    .modal-global-err {
-      display: none;
+    .modal-sub {
       font-size: 16px;
-      color: #b03025;
-      background: rgba(176,48,37,0.06);
-      border: 1px solid rgba(176,48,37,0.16);
-      padding: 11px 14px;
-      margin-top: 12px;
-      line-height: 1.5;
+      font-weight: 300;
+      color: var(--navy);
+      opacity: 0.55;
+      margin-bottom: 24px;
+      line-height: 1.6;
     }
-    .modal-global-err.show { display: block; }
-    .modal-global-err a { border-bottom: 1px solid currentColor; }
-
-    @media (max-width: 560px) {
-      .modal-panel { padding: 40px var(--gm); }
-      .f-row { grid-template-columns: 1fr; gap: 0; }
+    @media (max-width: 768px) {
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal-panel { max-width: 100%; max-height: 96vh; padding: 36px 24px 0; border-radius: 0; }
+      .modal-h3 { font-size: 22px; }
     }
 
   </style>
@@ -1070,73 +991,26 @@
     MODAL — Same form as index.html
     FORMSPREE: Replace xdaynrqv with your Formspree form ID
   ============================================================ -->
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
-    <div class="modal-panel" id="modalPanel">
+  <!-- ============================================================
+    MODAL — Calendly inline booking
+    EDIT: Change heading text if needed
+    CALENDLY: To update the booking link, change the data-url below
+  ============================================================ -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Book a call">
+    <div class="modal-panel">
 
+      <!-- Close button -->
       <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
 
-      <div id="modalForm">
-        <span class="lbl">Start a conversation</span>
-        <h3 class="modal-h3" id="modalHeading">Tell us about your people challenge.</h3>
+      <!-- EDIT: Change modal heading -->
+      <span class="lbl">Book a call</span>
+      <h3 class="modal-h3">20-minute hiring conversation.</h3>
+      <p class="modal-sub">No decks. No pitches. Pick a time that works for you.</p>
 
-        <form id="contactForm" novalidate>
-
-          <div class="f-row">
-            <div class="f-group" id="fg-name">
-              <label for="f-name">Full name *</label>
-              <input type="text" id="f-name" name="name" autocomplete="name" placeholder="Priya Mehta" />
-              <span class="f-errmsg">Please enter your name.</span>
-            </div>
-            <div class="f-group" id="fg-company">
-              <label for="f-company">Company name *</label>
-              <input type="text" id="f-company" name="company" autocomplete="organization" placeholder="Acme Fintech" />
-              <span class="f-errmsg">Please enter your company.</span>
-            </div>
-          </div>
-
-          <div class="f-row">
-            <div class="f-group" id="fg-email">
-              <label for="f-email">Work email *</label>
-              <input type="email" id="f-email" name="email" autocomplete="email" placeholder="priya@acme.com" />
-              <span class="f-errmsg">Please enter a valid email.</span>
-            </div>
-            <div class="f-group">
-              <label for="f-phone">Phone (optional)</label>
-              <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="+91 98765 43210" />
-            </div>
-          </div>
-
-          <div class="f-group" id="fg-need">
-            <label for="f-need">What do you need? *</label>
-            <select id="f-need" name="need">
-              <option value="" disabled>&mdash; Select one</option>
-              <option value="Recruitment">Recruitment</option>
-              <option value="Fractional HR" selected>Fractional HR</option>
-              <option value="Both">Both</option>
-            </select>
-            <span class="f-errmsg">Please select an option.</span>
-          </div>
-
-          <div class="f-group">
-            <label for="f-msg">Tell us about your challenge (optional)</label>
-            <textarea id="f-msg" name="message" rows="3" placeholder="We&rsquo;re 35 people and need someone to own HR end-to-end&hellip;"></textarea>
-          </div>
-
-          <button type="submit" class="btn-submit" id="modalSubmit">Send message &rarr;</button>
-
-          <div class="modal-global-err" id="modalGlobalErr">
-            Something went wrong &mdash; please email
-            <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a> directly.
-          </div>
-
-        </form>
-      </div>
-
-      <div class="modal-success" id="modalSuccess">
-        <span class="lbl">Message received</span>
-        <div class="modal-success-h">Thank you.</div>
-        <p class="modal-success-p">Shreya will be in touch within 24 hours.</p>
-      </div>
+      <!-- CALENDLY: Update data-url if your link changes -->
+      <div class="calendly-inline-widget"
+           data-url="https://calendly.com/shreya-sprintpeople/20min?hide_event_type_details=1&background_color=f5f0e8&text_color=1a1a2e&primary_color=c9a84c"
+           style="min-width:320px;height:670px;"></div>
 
     </div>
   </div>
@@ -1158,70 +1032,28 @@
       var closeBtn = document.getElementById('modalClose');
       var triggers = document.querySelectorAll('.open-modal');
 
-      function open()  { overlay.classList.add('open');    document.body.style.overflow = 'hidden'; }
-      function close() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+      function openModal() {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
 
       triggers.forEach(function (el) {
-        el.addEventListener('click', function (e) { e.preventDefault(); open(); });
-      });
-      closeBtn.addEventListener('click', close);
-      overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && overlay.classList.contains('open')) close();
-      });
-    }());
-
-    /* ── CONTACT FORM ── */
-    (function () {
-      var form      = document.getElementById('contactForm');
-      var submitBtn = document.getElementById('modalSubmit');
-      var formWrap  = document.getElementById('modalForm');
-      var success   = document.getElementById('modalSuccess');
-      var globalErr = document.getElementById('modalGlobalErr');
-
-      function check(id, groupId, isEmail) {
-        var el  = document.getElementById(id);
-        var grp = document.getElementById(groupId);
-        var val = (el.value || '').trim();
-        var ok  = isEmail ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) : val.length > 0;
-        el.classList.toggle('f-err', !ok);
-        grp.classList.toggle('has-err', !ok);
-        return ok;
-      }
-
-      function validate() {
-        return check('f-name','fg-name',false) & check('f-company','fg-company',false) &
-               check('f-email','fg-email',true) & check('f-need','fg-need',false);
-      }
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (!validate()) return;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending\u2026';
-        globalErr.classList.remove('show');
-
-        fetch('https://formspree.io/f/xdaynrqv', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name:    document.getElementById('f-name').value.trim(),
-            company: document.getElementById('f-company').value.trim(),
-            email:   document.getElementById('f-email').value.trim(),
-            phone:   document.getElementById('f-phone').value.trim(),
-            need:    document.getElementById('f-need').value,
-            message: document.getElementById('f-msg').value.trim()
-          })
-        })
-        .then(function (res) {
-          if (res.ok) { formWrap.style.display = 'none'; success.classList.add('show'); }
-          else throw new Error();
-        })
-        .catch(function () {
-          globalErr.classList.add('show');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send message \u2192';
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          openModal();
         });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
       });
     }());
 
@@ -1297,5 +1129,8 @@
     }());
 
   </script>
+
+  <!-- Calendly widget JS -->
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
