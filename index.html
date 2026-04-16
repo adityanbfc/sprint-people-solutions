@@ -9,7 +9,7 @@
   <!-- Google Fonts: Epilogue 900 + Hanken Grotesk 300/400 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@900&family=Hanken+Grotesk:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@900&family=Hanken+Grotesk:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <!-- Calendly inline widget -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
@@ -29,8 +29,8 @@
       --font-head:  'Epilogue', sans-serif;
       --font-body:  'Hanken Grotesk', sans-serif;
       --max-w:      1200px;
-      --g:          48px;   /* gutter */
-      --gm:         24px;   /* gutter mobile */
+      --g:          48px;
+      --gm:         24px;
     }
 
     /* ====================================================
@@ -38,19 +38,17 @@
     ==================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       font-family: var(--font-body);
       font-weight: 400;
       font-size: 18px;
-      line-height: 1.65;
+      line-height: 1.7;
       background: var(--white);
       color: var(--navy);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-
     h1, h2, h3, .stat-num { font-family: var(--font-head); font-weight: 900; }
     a { color: inherit; text-decoration: none; }
     button { cursor: pointer; font-family: var(--font-body); }
@@ -59,16 +57,29 @@
     /* ====================================================
        TYPOGRAPHY SYSTEM
     ==================================================== */
+    /* Section label */
     .lbl {
       display: block;
       font-family: var(--font-body);
       font-weight: 400;
-      font-size: 16px;
+      font-size: 14px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 24px;
     }
+
+    /* Shared section h2 */
+    .section-h2 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(28px, 3.8vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+    .section-h2.light { color: var(--white); }
 
     /* ====================================================
        BUTTONS
@@ -79,7 +90,7 @@
       color: var(--cream);
       font-family: var(--font-body);
       font-weight: 400;
-      font-size: 16px;
+      font-size: 19px;
       padding: 16px 40px;
       border: none;
       cursor: pointer;
@@ -89,7 +100,7 @@
     .btn-primary:hover { opacity: 0.85; }
 
     /* ====================================================
-       FADE-UP SCROLL ANIMATIONS
+       ANIMATIONS — fade-up on scroll
     ==================================================== */
     .fade-up {
       opacity: 0;
@@ -98,14 +109,13 @@
     }
     .fade-up.visible { opacity: 1; transform: none; }
 
-    /* Stagger for children */
     .stagger > .fade-up:nth-child(1) { transition-delay: 0.00s; }
     .stagger > .fade-up:nth-child(2) { transition-delay: 0.10s; }
     .stagger > .fade-up:nth-child(3) { transition-delay: 0.20s; }
     .stagger > .fade-up:nth-child(4) { transition-delay: 0.30s; }
     .stagger > .fade-up:nth-child(5) { transition-delay: 0.40s; }
 
-    /* Why Sprint items slide from left */
+    /* Why Sprint — slide in from left */
     .why-item {
       opacity: 0;
       transform: translateX(-28px);
@@ -113,14 +123,11 @@
     }
     .why-item.visible { opacity: 1; transform: none; }
 
-    /* ====================================================
-       HERO — Page-load stagger (CSS keyframes, no JS needed)
-    ==================================================== */
+    /* Hero page-load stagger */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     .h-anim {
       opacity: 0;
       animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -129,25 +136,36 @@
     .h-anim-2 { animation-delay: 0.15s; }
     .h-anim-3 { animation-delay: 0.30s; }
     .h-anim-4 { animation-delay: 0.45s; }
+    .h-anim-5 { animation-delay: 0.55s; }
+
+    /* Section canvas (background shapes) */
+    .sec-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
 
     /* ====================================================
-       NAV
+       NAV — navy background
     ==================================================== */
-    /* EDIT: Change nav logo text and links */
     .nav {
       position: sticky;
       top: 0;
       z-index: 300;
-      background: var(--cream);
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       transition: box-shadow 0.3s ease;
     }
-    .nav.raised { box-shadow: 0 2px 24px rgba(26,26,46,0.10); }
+    .nav.raised { box-shadow: 0 2px 24px rgba(0,0,0,0.25); }
 
     .nav-inner {
       max-width: var(--max-w);
       margin: 0 auto;
       padding: 0 var(--g);
-      height: 66px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -158,9 +176,9 @@
     .nav-logo {
       font-family: var(--font-head);
       font-weight: 900;
-      font-size: 22px;
+      font-size: 24px;
       letter-spacing: -0.03em;
-      color: var(--navy);
+      color: var(--white);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -170,32 +188,31 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 36px;
     }
-
     .nav-links a {
       font-size: 16px;
       font-weight: 400;
-      color: var(--navy);
-      opacity: 0.50;
+      color: var(--white);
+      opacity: 0.65;
       transition: opacity 0.2s ease;
     }
     .nav-links a:hover { opacity: 1; }
 
-    /* CTA button — hidden until user scrolls past hero */
+    /* CTA — hidden until scroll past hero */
     .nav-cta {
-      font-size: 16px !important;
+      font-size: 15px !important;
       font-weight: 400;
       opacity: 0 !important;
       pointer-events: none;
-      color: var(--navy) !important;
-      border: 1px solid var(--navy) !important;
-      padding: 10px 20px;
+      color: var(--white) !important;
+      border: 1px solid rgba(255,255,255,0.40) !important;
+      padding: 10px 22px;
       transition: opacity 0.35s ease, background 0.25s ease, color 0.25s ease !important;
     }
     .nav-cta:hover {
-      background: var(--navy) !important;
-      color: var(--white) !important;
+      background: var(--white) !important;
+      color: var(--navy) !important;
     }
     .nav-cta.show {
       opacity: 1 !important;
@@ -215,7 +232,7 @@
       display: block;
       width: 22px;
       height: 1.5px;
-      background: var(--navy);
+      background: var(--white);
       transition: all 0.28s ease;
       transform-origin: center;
     }
@@ -231,21 +248,20 @@
         position: absolute;
         top: 100%;
         left: 0; right: 0;
-        background: var(--cream);
-        border-bottom: 1px solid rgba(26,26,46,0.08);
+        background: var(--navy);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         flex-direction: column;
         align-items: flex-start;
         padding: 28px var(--gm);
         gap: 18px;
       }
       .nav-links.open { display: flex; }
-      .nav-links a { font-size: 16px; }
+      .nav-links a { font-size: 17px; }
     }
 
     /* ====================================================
-       HERO — white background, full viewport height
+       HERO — white background, full viewport
     ==================================================== */
-    /* EDIT: Change hero headline, sub-line, and tagline */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -254,8 +270,6 @@
       align-items: center;
       overflow: hidden;
     }
-
-    /* Canvas sits behind everything */
     #heroCanvas {
       position: absolute;
       inset: 0;
@@ -263,17 +277,6 @@
       height: 100%;
       z-index: 0;
     }
-
-    /* Section canvases */
-    .sec-canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
     .hero-content {
       position: relative;
       z-index: 1;
@@ -282,50 +285,65 @@
       padding: 120px var(--g);
       width: 100%;
     }
-
-    /* EDIT: Change tagline phrases */
+    /* EDIT: Change hero label */
     .hero-tag {
       display: block;
-      font-size: 16px;
-      font-weight: 400;
-      letter-spacing: 0.2em;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 36px;
     }
-
-    /* EDIT: Change this headline */
+    /* EDIT: Change hero headline */
     .hero-h1 {
       font-family: var(--font-head);
       font-weight: 900;
-      font-size: clamp(48px, 6vw, 84px);
+      font-size: clamp(42px, 6vw, 80px);
       line-height: 1.05;
       letter-spacing: -0.03em;
       color: var(--navy);
-      max-width: 1000px;
+      max-width: 900px;
       margin-bottom: 32px;
     }
-
-    /* EDIT: Change this sub-line */
+    /* EDIT: Change hero sub-line */
     .hero-sub {
       font-weight: 300;
-      font-size: 21px;
-      line-height: 1.7;
+      font-size: 20px;
+      line-height: 1.75;
       color: var(--navy);
-      opacity: 0.80;
-      max-width: 560px;
-      margin-bottom: 52px;
+      opacity: 0.65;
+      max-width: 580px;
+      margin-bottom: 40px;
     }
-
+    /* Proof strip */
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .proof-item {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.60;
+      letter-spacing: 0.02em;
+    }
+    .proof-divider {
+      color: var(--gold);
+      font-size: 16px;
+      opacity: 0.7;
+    }
     .hero-ctas {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
       gap: 0;
     }
-
     .hero-link {
-      font-size: 16px;
+      font-size: 19px;
       font-weight: 400;
       color: var(--navy);
       opacity: 0.70;
@@ -338,15 +356,15 @@
 
     @media (max-width: 768px) {
       .hero-content { padding: 100px var(--gm) 80px; }
-      .hero-h1 { max-width: 100%; font-size: clamp(36px, 10vw, 60px); }
+      .hero-h1 { font-size: clamp(36px, 10vw, 58px); line-height: 1.1; max-width: 100%; }
       .hero-sub { font-size: 18px; max-width: 100%; }
-      .hero-tag { font-size: 12px; letter-spacing: 0.14em; }
+      .hero-tag { font-size: 14px; letter-spacing: 0.10em; }
       .hero-ctas { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .hero-link { margin-left: 0; }
+      .hero-link { margin-left: 0; font-size: 18px; }
     }
 
     /* ====================================================
-       TICKER STRIP — navy background
+       TICKER — navy background
     ==================================================== */
     .ticker {
       background: var(--navy);
@@ -354,159 +372,395 @@
       overflow: hidden;
       cursor: default;
     }
-
-    /* 300%-wide track with 3 identical spans */
     .ticker-track {
       display: flex;
       width: 300%;
-      animation: ticker 28s linear infinite;
+      animation: ticker 60s linear infinite;
       white-space: nowrap;
     }
     .ticker:hover .ticker-track { animation-play-state: paused; }
-
     .ticker-item {
       flex: 0 0 33.3334%;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 400;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.75);
-      padding-right: 96px;
     }
-
     @keyframes ticker {
       from { transform: translateX(0); }
       to   { transform: translateX(-33.3334%); }
     }
 
     /* ====================================================
-       WHY SPRINT — cream background
+       PROBLEM + SOLUTION — cream background
     ==================================================== */
-    /* EDIT: Change section headline and four statements */
-    .why {
+    .problem {
       position: relative;
       overflow: hidden;
       background: var(--cream);
-      padding: 128px var(--g);
+      padding: 140px var(--g);
+    }
+    .problem-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .problem-half { max-width: 100%; }
+    .problem-half .section-h2 { margin-bottom: 28px; }
+    .problem-intro {
+      font-size: 19px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--navy);
+      opacity: 0.80;
+      margin-bottom: 32px;
+    }
+    .pain-list { margin-bottom: 48px; }
+    .pain-point {
+      font-size: 19px;
+      font-weight: 300;
+      color: var(--navy);
+      border-left: 3px solid var(--gold);
+      padding-left: 24px;
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+    .pain-close {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(22px, 2.8vw, 30px);
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .problem-rule { display: none; }
+    .solution-half { max-width: 100%; }
+    .solution-half .section-h2 { margin-bottom: 28px; }
+    .solution-intro {
+      font-size: 19px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--navy);
+      opacity: 0.80;
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+    .solution-points {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .solution-point {
+      border-top: 2px solid var(--gold);
+      padding-top: 18px;
+    }
+    /* Tick + heading inline row */
+    .solution-point-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .solution-check {
+      font-size: 15px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .solution-point strong {
+      display: inline;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(18px, 2vw, 21px);
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .solution-point p {
+      font-size: 19px;
+      font-weight: 300;
+      color: var(--navy);
+      opacity: 0.75;
+      line-height: 1.75;
+      padding-left: 25px;
     }
 
-    .why-inner {
+    @media (max-width: 900px) {
+      .problem-inner { grid-template-columns: 1fr; gap: 56px; }
+    }
+    @media (max-width: 768px) {
+      .problem { padding: 80px var(--gm); }
+      .problem-intro, .solution-intro { font-size: 17px; }
+      .pain-point { font-size: 17px; }
+      .solution-point p { font-size: 17px; }
+    }
+
+    /* ====================================================
+       PROCESS — navy background, white text
+    ==================================================== */
+    .process {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+      padding: 120px var(--g);
+    }
+    .process-inner {
       position: relative;
       z-index: 1;
       max-width: var(--max-w);
       margin: 0 auto;
     }
-
-    .why-head {
-      margin-bottom: 16px;
+    .process .section-h2.light { margin-bottom: 72px; }
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 80px;
     }
-
-    /* EDIT: Change section headline */
-    .why .section-h2 {
+    .process-step {
+      padding: 48px 0;
+    }
+    .step-num {
       font-family: var(--font-head);
       font-weight: 900;
-      font-size: clamp(44px, 6vw, 84px);
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      color: var(--navy);
-      margin-bottom: 24px;
-    }
-
-    /* EDIT: Change this sub-line */
-    .why-sub {
-      font-weight: 300;
-      font-size: 20px;
-      line-height: 1.7;
-      color: var(--navy);
-      opacity: 0.65;
-      max-width: 600px;
-      margin-bottom: 72px;
-    }
-
-    /* Numbered item row */
-    .why-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 40px;
-      padding: 36px 0;
-      border-top: 1px solid rgba(26,26,46,0.10);
-    }
-    .why-item:last-child { border-bottom: 1px solid rgba(26,26,46,0.10); }
-
-    .why-num {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(56px, 6vw, 80px);
-      line-height: 1;
+      font-size: 52px;
       color: var(--gold);
-      opacity: 0.30;
-      min-width: 80px;
-      flex-shrink: 0;
+      opacity: 0.55;
+      line-height: 1;
+      margin-bottom: 24px;
       letter-spacing: -0.04em;
     }
-
-    .why-body strong {
-      display: block;
-      font-weight: 400;
-      font-size: 20px;
-      color: var(--navy);
-      margin-bottom: 6px;
+    .step-title {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 26px;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.2;
     }
-    .why-body p {
-      font-size: 18px;
-      font-weight: 400;
-      color: var(--navy);
-      opacity: 0.65;
-      line-height: 1.7;
-      max-width: 760px;
+    .step-body {
+      font-size: 20px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.80);
+      line-height: 1.8;
     }
 
     @media (max-width: 768px) {
-      .why { padding: 80px var(--gm); }
-      .why .section-h2 { font-size: clamp(32px, 9vw, 52px); }
-      .why-num { font-size: clamp(40px, 10vw, 64px); min-width: 52px; }
-      .why-item { gap: 20px; padding: 28px 0; }
+      .process { padding: 80px var(--gm); }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-step {
+        padding: 36px 0;
+        border-left: none !important;
+      }
+    }
+
+    /* ====================================================
+       FOUNDER — cream background, two-column
+    ==================================================== */
+    .founder {
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+      padding: 120px var(--g);
+    }
+    .founder-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .founder-grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .founder-photo-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+    /* EDIT: Replace Shreya_Picture.png with actual photo path if different */
+    .founder-img {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border: 5px solid var(--white);
+      box-shadow: 0 8px 40px rgba(26,26,46,0.14);
+      align-self: stretch;
+    }
+    /* Name + LinkedIn row below photo — centred under image */
+    .founder-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+    }
+    .founder-name {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 26px;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .founder-linkedin {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      transition: background 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
+    }
+    .founder-linkedin:hover { background: var(--gold); color: var(--navy); }
+    .founder-content { padding-top: 8px; }
+    .founder-content .section-h2 { margin-bottom: 28px; }
+    /* EDIT: Change founder bio text */
+    .founder-bio {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--navy);
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+    .founder-bio-em {
+      font-size: 20px;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--navy);
+      opacity: 0.75;
+      margin-bottom: 20px;
+    }
+    .founder-bio-strong {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--navy);
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+    .founder-bio-close {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(18px, 2vw, 22px);
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 1000px) {
+      .founder-grid { grid-template-columns: 340px 1fr; gap: 56px; }
+    }
+    @media (max-width: 768px) {
+      .founder { padding: 80px var(--gm); }
+      .founder-grid { grid-template-columns: 1fr; gap: 40px; }
+      .founder-img { max-height: 440px; aspect-ratio: auto; }
+      .founder-name { font-size: 22px; }
+    }
+
+    /* ====================================================
+       INDUSTRIES — white background
+    ==================================================== */
+    .industries {
+      background: var(--white);
+      padding: 120px var(--g);
+    }
+    .industries-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .industries .section-h2 { margin-bottom: 64px; }
+    .industry-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+    }
+    .industry-card {
+      border-top: 2px solid rgba(201,168,76,0.40);
+      padding-top: 32px;
+    }
+    .industry-num {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(44px, 5vw, 64px);
+      color: var(--gold);
+      opacity: 0.55;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+    }
+    .industry-title {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(22px, 2.2vw, 28px);
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      line-height: 1.15;
+    }
+    .industry-sub {
+      display: block;
+      font-style: normal;
+      font-size: 17px;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 18px;
+      letter-spacing: 0.01em;
+    }
+    .industry-body {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.70;
+      line-height: 1.75;
+    }
+
+    @media (max-width: 900px) {
+      .industry-cards { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .industries { padding: 80px var(--gm); }
+      .industry-cards { grid-template-columns: 1fr; gap: 32px; }
     }
 
     /* ====================================================
        SERVICES — navy background, white text
     ==================================================== */
-    /* EDIT: Change service names, descriptions, and bullet points */
     .services {
       position: relative;
       overflow: hidden;
-      background: #2E2E4A;
-      padding: 128px var(--g);
+      background: var(--navy);
+      padding: 120px var(--g);
     }
-
     .services-inner {
       position: relative;
       z-index: 1;
       max-width: var(--max-w);
       margin: 0 auto;
     }
-
-    /* EDIT: Change section headline */
-    .services .section-h2 {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(44px, 6vw, 84px);
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      color: var(--white);
-      margin-bottom: 72px;
-    }
-
+    .services .section-h2.light { margin-bottom: 72px; }
     .svc-grid {
       display: grid;
       grid-template-columns: 1fr 1px 1fr;
       gap: 0 72px;
       align-items: start;
     }
-
-    /* 1px vertical rule */
     .svc-rule { background: rgba(255,255,255,0.10); }
-
     .svc-num {
       font-family: var(--font-head);
       font-weight: 900;
@@ -517,19 +771,14 @@
       line-height: 1;
       margin-bottom: 20px;
     }
-
     .svc-col h3 {
       font-family: var(--font-head);
       font-weight: 900;
-      font-size: clamp(28px, 3.5vw, 40px);
+      font-size: clamp(24px, 3vw, 36px);
       color: var(--white);
       letter-spacing: -0.02em;
       margin-bottom: 8px;
     }
-    .svc-col h3 a { transition: opacity 0.2s ease; }
-    .svc-col h3 a:hover { opacity: 0.75; }
-
-    /* EDIT: Change service tagline text */
     .svc-tagline {
       font-style: italic;
       font-weight: 300;
@@ -538,24 +787,18 @@
       margin-bottom: 20px;
       display: block;
     }
-
     .svc-desc {
       font-weight: 300;
       font-size: 18px;
       line-height: 1.8;
-      color: rgba(255,255,255,0.88);
+      color: rgba(255,255,255,0.72);
       margin-bottom: 28px;
     }
-
-    .svc-list {
-      display: flex;
-      flex-direction: column;
-    }
-
+    .svc-list { display: flex; flex-direction: column; }
     .svc-list li {
       font-size: 18px;
       font-weight: 400;
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,0.68);
       line-height: 1.8;
       padding-left: 20px;
       position: relative;
@@ -567,7 +810,6 @@
       color: var(--gold);
       opacity: 0.65;
     }
-
     .svc-explore {
       display: inline-block;
       margin-top: 28px;
@@ -582,144 +824,36 @@
 
     @media (max-width: 768px) {
       .services { padding: 80px var(--gm); }
-      .services .section-h2 { font-size: clamp(32px, 9vw, 52px); }
-      .svc-num { font-size: clamp(40px, 10vw, 56px); }
       .svc-grid { grid-template-columns: 1fr; gap: 56px 0; }
       .svc-rule { display: none; }
     }
 
     /* ====================================================
-       ABOUT — cream background
+       CONTACT — cream background
     ==================================================== */
-    /* EDIT: Change founder bio and credibility stats */
-    .about {
-      position: relative;
-      overflow: hidden;
-      background: var(--cream);
-      padding: 128px var(--g);
-    }
-
-    .about-inner {
-      position: relative;
-      z-index: 1;
-      max-width: var(--max-w);
-      margin: 0 auto;
-    }
-
-    /* EDIT: Change section headline */
-    .about .section-h2 {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(44px, 6vw, 84px);
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      color: var(--navy);
-      margin-bottom: 32px;
-    }
-
-    /* EDIT: Change founder bio text */
-    .about-body {
-      font-weight: 300;
-      font-size: 21px;
-      line-height: 1.75;
-      color: var(--navy);
-      opacity: 0.90;
-      max-width: 680px;
-      margin-bottom: 64px;
-    }
-
-    /* Stats row */
-    .stats-row {
-      border-top: 1px solid var(--gold);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding-top: 0;
-    }
-
-    .stat-item {
-      padding: 36px 48px 36px 0;
-      border-right: 1px solid rgba(201,168,76,0.22);
-    }
-    .stat-item:last-child { border-right: none; padding-right: 0; padding-left: 48px; }
-    .stat-item:nth-child(2) { padding-left: 48px; }
-
-    /* EDIT: Change stat numbers and labels */
-    .stat-num {
-      display: block;
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(40px, 5vw, 64px);
-      color: var(--gold);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .stat-lbl {
-      display: block;
-      font-family: var(--font-body);
-      font-size: 16px;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      color: var(--navy);
-      opacity: 0.75;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 768px) {
-      .about { padding: 80px var(--gm); }
-      .about .section-h2 { font-size: clamp(32px, 9vw, 52px); }
-      .about-body { font-size: 18px; }
-      .stat-num { font-size: clamp(32px, 9vw, 48px); }
-      .stats-row { grid-template-columns: 1fr; }
-      .stat-item {
-        padding: 28px 0 !important;
-        border-right: none;
-        border-bottom: 1px solid rgba(201,168,76,0.22);
-      }
-      .stat-item:last-child { border-bottom: none; }
-    }
-
-    /* ====================================================
-       CONTACT — white background
-    ==================================================== */
-    /* EDIT: Change contact headline and body text */
     .contact {
       position: relative;
       overflow: hidden;
-      background: var(--white);
-      padding: 128px var(--g);
+      background: var(--cream);
+      padding: 120px var(--g);
     }
-
     .contact-inner {
       position: relative;
       z-index: 1;
       max-width: var(--max-w);
       margin: 0 auto;
     }
-
-    /* EDIT: Change section headline */
-    .contact .section-h2 {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(44px, 6vw, 84px);
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      color: var(--navy);
-      margin-bottom: 24px;
-    }
-
-    /* EDIT: Change body text */
+    .contact .section-h2 { margin-bottom: 24px; }
+    /* EDIT: Change contact body text */
     .contact-body {
       font-weight: 300;
-      font-size: 21px;
-      line-height: 1.7;
+      font-size: 20px;
+      line-height: 1.75;
       color: var(--navy);
-      opacity: 0.82;
+      opacity: 0.80;
       max-width: 560px;
       margin-bottom: 48px;
     }
-
     /* EDIT: Change email address (href AND display text) */
     .contact-alt {
       display: block;
@@ -727,7 +861,7 @@
       font-size: 16px;
       font-weight: 400;
       color: var(--navy);
-      opacity: 0.75;
+      opacity: 0.65;
     }
     .contact-alt a {
       color: var(--navy);
@@ -736,11 +870,10 @@
       padding-bottom: 1px;
       transition: opacity 0.2s ease;
     }
-    .contact-alt a:hover { opacity: 0.75; }
+    .contact-alt a:hover { opacity: 0.70; }
 
     @media (max-width: 768px) {
       .contact { padding: 80px var(--gm); }
-      .contact .section-h2 { font-size: clamp(32px, 9vw, 52px); }
       .contact-body { font-size: 18px; }
     }
 
@@ -753,7 +886,6 @@
     }
     .footer-inner { max-width: var(--max-w); margin: 0 auto; }
 
-    /* 4-column grid: brand | quick links | services | contact */
     .footer-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 1.5fr;
@@ -761,8 +893,6 @@
       padding-bottom: 64px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-
-    /* Column 1 — brand */
     .footer-brand-logo {
       display: flex;
       align-items: center;
@@ -775,26 +905,21 @@
       margin-bottom: 20px;
     }
     .footer-brand-logo svg { flex-shrink: 0; }
-
     .footer-desc {
       font-size: 16px;
       font-weight: 300;
-      color: rgba(255,255,255,0.58);
+      color: rgba(255,255,255,0.50);
       line-height: 1.8;
     }
-
-    /* Column headers */
     .footer-col-head {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 400;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 24px;
     }
-
-    /* Link lists */
     .footer-links {
       display: flex;
       flex-direction: column;
@@ -802,12 +927,10 @@
     }
     .footer-links a {
       font-size: 16px;
-      color: rgba(255,255,255,0.58);
+      color: rgba(255,255,255,0.55);
       transition: color 0.2s ease;
     }
     .footer-links a:hover { color: var(--white); }
-
-    /* Contact column */
     .footer-contact-list {
       display: flex;
       flex-direction: column;
@@ -818,21 +941,16 @@
       align-items: flex-start;
       gap: 12px;
       font-size: 16px;
-      color: rgba(255,255,255,0.58);
+      color: rgba(255,255,255,0.55);
       line-height: 1.5;
     }
     .footer-contact-item a {
-      color: rgba(255,255,255,0.58);
+      color: rgba(255,255,255,0.55);
       transition: color 0.2s ease;
     }
     .footer-contact-item a:hover { color: var(--white); }
-    .footer-contact-icon {
-      color: var(--gold);
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
+    .footer-contact-icon { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
 
-    /* Get in Touch CTA band */
     .footer-cta {
       display: flex;
       align-items: center;
@@ -843,7 +961,7 @@
     }
     .footer-cta-label {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold);
@@ -872,7 +990,6 @@
     }
     .btn-footer-cta:hover { opacity: 0.85; }
 
-    /* Copyright + legal links */
     .footer-bottom {
       display: flex;
       align-items: center;
@@ -895,7 +1012,7 @@
       color: rgba(255,255,255,0.28);
       transition: color 0.2s ease;
     }
-    .footer-legal-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-legal-links a:hover { color: rgba(255,255,255,0.70); }
 
     @media (max-width: 900px) {
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 40px; }
@@ -910,9 +1027,132 @@
     }
 
     /* ====================================================
-       MODAL
+       CTA BUTTON GROUP — Book a call + Submit challenge
     ==================================================== */
-    /* ── CALENDLY FULL-SCREEN LIGHTBOX ── */
+    .cta-btn-group {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .btn-challenge {
+      display: inline-block;
+      background: transparent;
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 19px;
+      padding: 15px 40px;
+      border: 1px solid rgba(26,26,46,0.40);
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-challenge:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+
+    /* ====================================================
+       FORM MODAL — Submit your challenge
+    ==================================================== */
+    .form-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1001;
+      background: rgba(26,26,46,0.88);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .form-overlay.open { opacity: 1; pointer-events: all; }
+    .form-panel {
+      background: var(--white);
+      max-width: 520px;
+      width: 100%;
+      padding: 56px 48px;
+      position: relative;
+      max-height: 92vh;
+      overflow-y: auto;
+      transform: translateY(24px);
+      transition: transform 0.30s ease;
+    }
+    .form-overlay.open .form-panel { transform: none; }
+    .form-close-btn {
+      position: absolute;
+      top: 20px; right: 22px;
+      background: none; border: none;
+      font-size: 26px; line-height: 1;
+      color: var(--navy); opacity: 0.38;
+      cursor: pointer; padding: 4px 8px;
+      transition: opacity 0.2s ease;
+    }
+    .form-close-btn:hover { opacity: 1; }
+    .form-h3 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -0.025em;
+      color: var(--navy);
+      line-height: 1.05;
+      margin-bottom: 32px;
+    }
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .f-group { margin-bottom: 18px; }
+    .f-group label {
+      display: block; font-size: 16px; font-weight: 400;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--navy); opacity: 0.52; margin-bottom: 8px;
+    }
+    .f-group input, .f-group select, .f-group textarea {
+      width: 100%; font-family: var(--font-body); font-weight: 300;
+      font-size: 15px; color: var(--navy); background: var(--white);
+      border: 1px solid rgba(26,26,46,0.18); padding: 13px 16px;
+      outline: none; border-radius: 0; appearance: none;
+      -webkit-appearance: none; transition: border-color 0.2s ease; line-height: 1.5;
+    }
+    .f-group input:focus, .f-group select:focus, .f-group textarea:focus { border-color: var(--gold); }
+    .f-group input.f-err, .f-group select.f-err, .f-group textarea.f-err { border-color: #b03025; }
+    .f-errmsg { display: none; font-size: 14px; color: #b03025; margin-top: 5px; }
+    .f-group.has-err .f-errmsg { display: block; }
+    .f-group textarea { resize: vertical; min-height: 96px; }
+    .f-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%231A1A2E' fill-opacity='0.4' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+    }
+    .btn-submit {
+      width: 100%; background: var(--navy); color: var(--cream);
+      font-family: var(--font-head); font-weight: 900; font-size: 15px;
+      letter-spacing: 0.01em; padding: 16px; border: none;
+      cursor: pointer; margin-top: 8px; transition: opacity 0.25s ease;
+    }
+    .btn-submit:hover { opacity: 0.85; }
+    .btn-submit:disabled { opacity: 0.40; cursor: not-allowed; }
+    .form-success { display: none; text-align: center; padding: 40px 0 16px; }
+    .form-success.show { display: block; }
+    .form-success-h {
+      font-family: var(--font-head); font-weight: 900; font-size: 28px;
+      letter-spacing: -0.025em; color: var(--navy); margin-bottom: 12px;
+    }
+    .form-success-p { font-size: 16px; font-weight: 300; color: var(--navy); opacity: 0.60; line-height: 1.6; }
+    .form-global-err {
+      display: none; font-size: 16px; color: #b03025;
+      background: rgba(176,48,37,0.06); border: 1px solid rgba(176,48,37,0.16);
+      padding: 11px 14px; margin-top: 12px;
+    }
+    .form-global-err.show { display: block; }
+    @media (max-width: 600px) {
+      .form-panel { padding: 40px 24px; }
+      .f-row { grid-template-columns: 1fr; }
+      .cta-btn-group { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ====================================================
+       MODAL — Calendly full-screen lightbox
+    ==================================================== */
     .cal-overlay {
       position: fixed;
       inset: 0;
@@ -928,10 +1168,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
-    .cal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .cal-overlay.open { opacity: 1; pointer-events: all; }
     .cal-inner {
       position: relative;
       width: 100%;
@@ -954,7 +1191,7 @@
       align-items: center;
       gap: 6px;
       font-family: var(--font-body);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 400;
       color: var(--navy);
       opacity: 0.45;
@@ -964,7 +1201,7 @@
       text-transform: uppercase;
     }
     .cal-close:hover { opacity: 1; }
-    .cal-close span { font-size: 13px; }
+    .cal-close span { font-size: 14px; }
     .calendly-inline-widget {
       flex: 1;
       width: 100% !important;
@@ -979,7 +1216,7 @@
 
     @media (max-width: 380px) {
       body { font-size: 16px; }
-      .lbl { font-size: 11px; letter-spacing: 0.14em; }
+      .lbl { font-size: 14px; letter-spacing: 0.14em; }
       .btn-primary { padding: 14px 28px; font-size: 15px; width: 100%; text-align: center; }
       .nav-logo { font-size: 18px; }
     }
@@ -988,8 +1225,10 @@
 </head>
 <body>
 
+
   <!-- ============================================================
-    EDIT: NAV — Change logo, links, CTA text
+    NAV
+    EDIT: Change logo, nav links, CTA text
   ============================================================ -->
   <nav class="nav" id="siteNav">
     <div class="nav-inner">
@@ -1020,7 +1259,7 @@
         <!-- <a href="/mandates">Open Mandates</a> -->
 
         <!-- EDIT: Change CTA button text -->
-        <a href="#" class="nav-cta open-modal">Start a conversation</a>
+        <a href="#" class="nav-cta open-modal">Book a call</a>
       </div>
 
     </div>
@@ -1028,27 +1267,27 @@
 
 
   <!-- ============================================================
-    EDIT: HERO — Change headline, sub-line, and tagline
+    HERO — white background, canvas animation
+    EDIT: Change headline, sub-line, proof strip, CTA text
   ============================================================ -->
   <section class="hero">
     <canvas id="heroCanvas" aria-hidden="true"></canvas>
 
     <div class="hero-content">
 
-      <!-- EDIT: Change the three tagline phrases -->
-      <span class="hero-tag h-anim h-anim-1">Assessment-Led Hiring &nbsp;&middot;&nbsp; Fractional HR &nbsp;&middot;&nbsp; People Systems</span>
+      <!-- EDIT: Change hero label -->
+      <span class="hero-tag h-anim h-anim-1">ASSESSMENT-LED HIRING · FRACTIONAL HR · PEOPLE SYSTEMS</span>
 
-      <!-- EDIT: Change this headline -->
-      <h1 class="hero-h1 h-anim h-anim-2">Because great hiring<br>should move fast&nbsp;&mdash;<br>and right.</h1>
+      <!-- EDIT: Change hero headline -->
+      <h1 class="hero-h1 h-anim h-anim-2">Build your team with fewer, better hires.</h1>
 
-      <!-- EDIT: Change this sub-line -->
-      <p class="hero-sub h-anim h-anim-3">Assessment-led hiring and fractional HR for startups and financial services teams.</p>
+      <!-- EDIT: Change hero sub-line -->
+      <p class="hero-sub h-anim h-anim-3">Sprint helps startups and NBFCs hire critical roles through assessment-led, founder-driven hiring — so you don't waste time on irrelevant profiles.</p>
 
+      <!-- EDIT: Change CTA button text and secondary link -->
       <div class="hero-ctas h-anim h-anim-4">
-        <!-- EDIT: Change primary button text -->
-        <button class="btn-primary open-modal">Start a conversation</button>
-        <!-- EDIT: Change secondary link text or href -->
-        <a href="#why" class="hero-link">See how we work &rarr;</a>
+        <a href="#" class="btn-primary open-modal">Book a call</a>
+        <a href="#problem" class="hero-link">See how we work →</a>
       </div>
 
     </div>
@@ -1056,72 +1295,100 @@
 
 
   <!-- ============================================================
-    TICKER — Edit the text content inside each .ticker-item
-    All three spans must contain identical text for seamless looping.
+    TICKER — Edit the text inside each .ticker-item
+    Keep all three spans identical for seamless looping.
   ============================================================ -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
       <!-- EDIT: Change ticker text (keep all three spans identical) -->
-      <span class="ticker-item">ASSESSMENT-LED HIRING &ensp;✦&ensp; FRACTIONAL HR &ensp;✦&ensp; BFSI &amp; FINTECH &ensp;✦&ensp; STARTUP HIRING SPRINTS &ensp;✦&ensp; FOUNDER-LED &ensp;✦&ensp; NO HANDOFFS &ensp;✦&ensp; CURATED NOT CROWDED &ensp;✦&ensp;</span>
-      <span class="ticker-item">ASSESSMENT-LED HIRING &ensp;✦&ensp; FRACTIONAL HR &ensp;✦&ensp; BFSI &amp; FINTECH &ensp;✦&ensp; STARTUP HIRING SPRINTS &ensp;✦&ensp; FOUNDER-LED &ensp;✦&ensp; NO HANDOFFS &ensp;✦&ensp; CURATED NOT CROWDED &ensp;✦&ensp;</span>
-      <span class="ticker-item">ASSESSMENT-LED HIRING &ensp;✦&ensp; FRACTIONAL HR &ensp;✦&ensp; BFSI &amp; FINTECH &ensp;✦&ensp; STARTUP HIRING SPRINTS &ensp;✦&ensp; FOUNDER-LED &ensp;✦&ensp; NO HANDOFFS &ensp;✦&ensp; CURATED NOT CROWDED &ensp;✦&ensp;</span>
+      <span class="ticker-item">Assessment-Led Hiring &emsp;✦&emsp; Curated Shortlists &emsp;✦&emsp; Founder-Led Execution &emsp;✦&emsp; Pre-Assessed Profiles &emsp;✦&emsp; Decision-Ready Candidates &emsp;✦&emsp; Role-Fit Evaluation &emsp;✦&emsp; Structured Hiring &emsp;✦&emsp; Quality Over Volume &emsp;✦&emsp; Fewer Profiles. Better Hires. &emsp;✦&emsp; Hire With Confidence &emsp;✦&emsp; No Keyword-Matched Resumes &emsp;✦&emsp; NBFC Hiring Specialists &emsp;✦&emsp; BFSI Talent Partners &emsp;✦&emsp; Startup Hiring Sprints &emsp;✦&emsp; Fintech Recruitment &emsp;✦&emsp; Early Stage to Scale &emsp;✦&emsp; 0 → 3000+ Teams Built &emsp;✦&emsp; Pre-Seed to Series B &emsp;✦&emsp; High-Growth Companies &emsp;✦&emsp; Assessment Before Introduction &emsp;✦&emsp; Stage-Aware Matching &emsp;✦&emsp; Pre-Joining Engagement &emsp;✦&emsp; Accountable Hiring &emsp;✦&emsp; Honest Communication &emsp;✦&emsp; Built From First Principles &emsp;✦&emsp; Hiring As A System &emsp;✦&emsp; Built For Founders &emsp;✦&emsp; People-First. Always. &ensp;&ensp;&ensp;</span>
+      <span class="ticker-item">Assessment-Led Hiring &emsp;✦&emsp; Curated Shortlists &emsp;✦&emsp; Founder-Led Execution &emsp;✦&emsp; Pre-Assessed Profiles &emsp;✦&emsp; Decision-Ready Candidates &emsp;✦&emsp; Role-Fit Evaluation &emsp;✦&emsp; Structured Hiring &emsp;✦&emsp; Quality Over Volume &emsp;✦&emsp; Fewer Profiles. Better Hires. &emsp;✦&emsp; Hire With Confidence &emsp;✦&emsp; No Keyword-Matched Resumes &emsp;✦&emsp; NBFC Hiring Specialists &emsp;✦&emsp; BFSI Talent Partners &emsp;✦&emsp; Startup Hiring Sprints &emsp;✦&emsp; Fintech Recruitment &emsp;✦&emsp; Early Stage to Scale &emsp;✦&emsp; 0 → 3000+ Teams Built &emsp;✦&emsp; Pre-Seed to Series B &emsp;✦&emsp; High-Growth Companies &emsp;✦&emsp; Assessment Before Introduction &emsp;✦&emsp; Stage-Aware Matching &emsp;✦&emsp; Pre-Joining Engagement &emsp;✦&emsp; Accountable Hiring &emsp;✦&emsp; Honest Communication &emsp;✦&emsp; Built From First Principles &emsp;✦&emsp; Hiring As A System &emsp;✦&emsp; Built For Founders &emsp;✦&emsp; People-First. Always. &ensp;&ensp;&ensp;</span>
+      <span class="ticker-item">Assessment-Led Hiring &emsp;✦&emsp; Curated Shortlists &emsp;✦&emsp; Founder-Led Execution &emsp;✦&emsp; Pre-Assessed Profiles &emsp;✦&emsp; Decision-Ready Candidates &emsp;✦&emsp; Role-Fit Evaluation &emsp;✦&emsp; Structured Hiring &emsp;✦&emsp; Quality Over Volume &emsp;✦&emsp; Fewer Profiles. Better Hires. &emsp;✦&emsp; Hire With Confidence &emsp;✦&emsp; No Keyword-Matched Resumes &emsp;✦&emsp; NBFC Hiring Specialists &emsp;✦&emsp; BFSI Talent Partners &emsp;✦&emsp; Startup Hiring Sprints &emsp;✦&emsp; Fintech Recruitment &emsp;✦&emsp; Early Stage to Scale &emsp;✦&emsp; 0 → 3000+ Teams Built &emsp;✦&emsp; Pre-Seed to Series B &emsp;✦&emsp; High-Growth Companies &emsp;✦&emsp; Assessment Before Introduction &emsp;✦&emsp; Stage-Aware Matching &emsp;✦&emsp; Pre-Joining Engagement &emsp;✦&emsp; Accountable Hiring &emsp;✦&emsp; Honest Communication &emsp;✦&emsp; Built From First Principles &emsp;✦&emsp; Hiring As A System &emsp;✦&emsp; Built For Founders &emsp;✦&emsp; People-First. Always. &ensp;&ensp;&ensp;</span>
     </div>
   </div>
 
 
   <!-- ============================================================
-    EDIT: WHY SPRINT — Change headline, sub-line, four statements
+    PROBLEM + SOLUTION
+    EDIT: Change problem headline, pain points, solution headline, solution points
   ============================================================ -->
-  <section class="why" id="why">
-    <canvas id="whyCanvas" class="sec-canvas" aria-hidden="true"></canvas>
-    <div class="why-inner">
+  <section class="problem" id="problem">
+    <canvas class="sec-canvas" id="problemCanvas" aria-hidden="true"></canvas>
+    <div class="problem-inner">
 
-      <!-- EDIT: Change section label -->
-      <span class="lbl fade-up">Why Sprint</span>
+      <!-- PROBLEM HALF -->
+      <div class="problem-half fade-up">
 
-      <div class="why-head">
-        <!-- EDIT: Change section headline -->
-        <h2 class="section-h2 fade-up">Hiring, built as a system&nbsp;&mdash;<br>not just a service.</h2>
-      </div>
+        <!-- EDIT: Change section label -->
+        <span class="lbl">The Problem</span>
 
-      <!-- EDIT: Change this sub-line -->
-      <p class="why-sub fade-up">Fewer profiles. Better decisions. Faster hires.</p>
+        <!-- EDIT: Change problem headline -->
+        <h2 class="section-h2">Hiring is broken — especially when it matters most.</h2>
 
-      <!-- EDIT: Change any of the four statements below -->
+        <!-- EDIT: Change intro text -->
+        <p class="problem-intro">Most companies don't struggle with finding candidates. They struggle with:</p>
 
-      <div class="why-item">
-        <span class="why-num">01</span>
-        <div class="why-body">
-          <!-- EDIT: Change statement title and body -->
-          <strong>Assess before we share</strong>
-          <p>Every candidate is evaluated on skills, role readiness, and culture fit before you see them.</p>
+        <!-- EDIT: Change pain points -->
+        <div class="pain-list">
+          <p class="pain-point">Too many irrelevant profiles</p>
+          <p class="pain-point">No clear evaluation framework</p>
+          <p class="pain-point">Delayed decisions</p>
+          <p class="pain-point">Hiring mistakes that cost months</p>
         </div>
+
+        <!-- EDIT: Change closing line -->
+        <p class="pain-close">You don't need more resumes. You need better decisions.</p>
+
       </div>
 
-      <div class="why-item">
-        <span class="why-num">02</span>
-        <div class="why-body">
-          <!-- EDIT: Change statement title and body -->
-          <strong>Curated, not crowded</strong>
-          <p>4&ndash;5 high-fit candidates per role. Each with a written summary and assessment score. No noise.</p>
-        </div>
-      </div>
+      <!-- Gold rule between problem and solution -->
+      <hr class="problem-rule">
 
-      <div class="why-item">
-        <span class="why-num">03</span>
-        <div class="why-body">
-          <!-- EDIT: Change statement title and body -->
-          <strong>Stage-aware matching</strong>
-          <p>A Series A hire is not a Series C hire. Talent mapped to your growth stage, not just the JD.</p>
-        </div>
-      </div>
+      <!-- SOLUTION HALF -->
+      <div class="solution-half fade-up">
 
-      <div class="why-item">
-        <span class="why-num">04</span>
-        <div class="why-body">
-          <!-- EDIT: Change statement title and body -->
-          <strong>Tech-enabled, human-led</strong>
-          <p>Smart tools for speed. Human judgment for decisions.</p>
+        <!-- EDIT: Change section label -->
+        <span class="lbl">The Solution</span>
+
+        <!-- EDIT: Change solution headline -->
+        <h2 class="section-h2">We don't send profiles. We help you hire.</h2>
+
+        <!-- EDIT: Change solution intro -->
+        <p class="solution-intro">Sprint is built on a simple principle: hiring should be curated, assessed, and decision-ready.</p>
+
+        <!-- EDIT: Change the three solution points -->
+        <div class="solution-points stagger">
+
+          <div class="solution-point fade-up">
+            <div class="solution-point-head">
+              <span class="solution-check">✔</span>
+              <!-- EDIT: Change solution point title -->
+              <strong>You see only 4–5 high-fit candidates</strong>
+            </div>
+            <!-- EDIT: Change solution point body -->
+            <p>Pre-assessed, not just sourced. Every profile evaluated before it reaches you.</p>
+          </div>
+
+          <div class="solution-point fade-up">
+            <div class="solution-point-head">
+              <span class="solution-check">✔</span>
+              <!-- EDIT: Change solution point title -->
+              <strong>You hire faster — with clarity and confidence</strong>
+            </div>
+            <!-- EDIT: Change solution point body -->
+            <p>No back-and-forth on irrelevant profiles. Decisions move at the speed of trust.</p>
+          </div>
+
+          <div class="solution-point fade-up">
+            <div class="solution-point-head">
+              <span class="solution-check">✔</span>
+              <!-- EDIT: Change solution point title -->
+              <strong>Every profile is decision-ready</strong>
+            </div>
+            <!-- EDIT: Change solution point body -->
+            <p>Evaluated before it reaches you. With a written summary and assessment score.</p>
+          </div>
+
         </div>
       </div>
 
@@ -1130,54 +1397,215 @@
 
 
   <!-- ============================================================
-    EDIT: SERVICES — Change service details and bullet points
+    PROCESS — navy background
+    EDIT: Change headline and four process steps
+  ============================================================ -->
+  <section class="process" id="process">
+    <canvas class="sec-canvas" id="processCanvas" aria-hidden="true"></canvas>
+    <div class="process-inner">
+
+      <!-- EDIT: Change section label -->
+      <span class="lbl fade-up">How We Work</span>
+
+      <!-- EDIT: Change section headline -->
+      <h2 class="section-h2 light fade-up">A structured approach to better hiring.</h2>
+
+      <div class="process-grid">
+
+        <!-- EDIT: Change step title and body -->
+        <div class="process-step fade-up">
+          <div class="step-num">01</div>
+          <div class="step-title">Define success, not just the role</div>
+          <p class="step-body">We align on what success looks like at 3, 6, and 12 months — not just a JD. The right brief produces the right hire.</p>
+        </div>
+
+        <!-- EDIT: Change step title and body -->
+        <div class="process-step fade-up">
+          <div class="step-num">02</div>
+          <div class="step-title">Assess before we share</div>
+          <p class="step-body">Every candidate is evaluated on skills, role readiness, and fit before a single profile reaches you.</p>
+        </div>
+
+        <!-- EDIT: Change step title and body -->
+        <div class="process-step fade-up">
+          <div class="step-num">03</div>
+          <div class="step-title">Curate, not crowd</div>
+          <p class="step-body">You get 4–5 profiles you can actually hire from. Each with a written summary and assessment score. No inbox flooding.</p>
+        </div>
+
+        <!-- EDIT: Change step title and body -->
+        <div class="process-step fade-up">
+          <div class="step-num">04</div>
+          <div class="step-title">Close with speed</div>
+          <p class="step-body">We help drive decisions and closure — not just sourcing. Pre-joining engagement and accountability through to day one.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    FOUNDER — cream background, two-column layout
+    EDIT: Change bio text, stats, LinkedIn URL
+  ============================================================ -->
+  <section class="founder" id="about">
+    <canvas class="sec-canvas" id="founderCanvas" aria-hidden="true"></canvas>
+    <div class="founder-inner">
+
+      <div class="founder-grid">
+
+        <!-- Left: photo + name + LinkedIn -->
+        <div class="founder-photo-col fade-up">
+          <!-- EDIT: Update src if photo filename changes -->
+          <img class="founder-img"
+               src="Shreya_Picture.png"
+               alt="Shreya Sharma, Founder Sprint People Solutions" />
+          <!-- Name + LinkedIn icon row -->
+          <div class="founder-name-row">
+            <!-- EDIT: Change founder name if needed -->
+            <span class="founder-name">Shreya Sharma</span>
+            <!-- EDIT: Update LinkedIn URL -->
+            <a class="founder-linkedin"
+               href="https://www.linkedin.com/in/shreyasharma1402/"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="View Shreya's LinkedIn profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: content -->
+        <div class="founder-content fade-up">
+
+          <!-- EDIT: Change section label -->
+          <span class="lbl">The Founder</span>
+
+          <!-- EDIT: Change headline -->
+          <h2 class="section-h2">Founder-led. Always.</h2>
+
+          <!-- EDIT: Change bio paragraphs below -->
+          <p class="founder-bio">Shreya brings over a decade of experience building teams across NBFCs, BFSI, and high-growth startups — from early-stage setups to 3000+ employee organizations.</p>
+
+          <p class="founder-bio-em">But more importantly, she has seen where hiring breaks.</p>
+
+          <p class="founder-bio">At Sprint, every mandate is personally led by her — from defining the role to closing the hire.<br>No handoffs. No layers. No junior ownership.</p>
+
+          <p class="founder-bio">You don't just get access to candidates —<br>you get experienced judgment applied to every hiring decision.</p>
+
+          <p class="founder-bio-close">If a hire doesn't work, accountability sits here.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    INDUSTRIES — white background
+    EDIT: Change section headline and three industry cards
+  ============================================================ -->
+  <section class="industries" id="industries">
+    <div class="industries-inner">
+
+      <div class="fade-up">
+        <!-- EDIT: Change section label -->
+        <span class="lbl">Where We Work Best</span>
+
+        <!-- EDIT: Change section headline -->
+        <h2 class="section-h2">We work best with</h2>
+      </div>
+
+      <!-- EDIT: Change the three industry cards -->
+      <div class="industry-cards stagger">
+
+        <div class="industry-card fade-up">
+          <!-- EDIT: Change number, title, sub-label, body -->
+          <div class="industry-num">01</div>
+          <div class="industry-title">NBFCs &amp; BFSI</div>
+          <span class="industry-sub">Scaling financial services teams</span>
+          <p class="industry-body">Scaling sales and operational teams where domain knowledge and structured hiring matter most. Assessment is not optional here — it's essential.</p>
+        </div>
+
+        <div class="industry-card fade-up">
+          <!-- EDIT: Change number, title, sub-label, body -->
+          <div class="industry-num">02</div>
+          <div class="industry-title">Startups (0→50 / 50→200)</div>
+          <span class="industry-sub">Building core teams and leadership</span>
+          <p class="industry-body">Founders doing hiring themselves. Need structure, speed, and the right people from day one. We bring the process so you can focus on the product.</p>
+        </div>
+
+        <div class="industry-card fade-up">
+          <!-- EDIT: Change number, title, sub-label, body -->
+          <div class="industry-num">03</div>
+          <div class="industry-title">Fintech &amp; High-Growth Companies</div>
+          <span class="industry-sub">Where hiring mistakes are expensive</span>
+          <p class="industry-body">Roles where a wrong hire costs months. Assessment-led hiring removes that risk. Move fast without compromising on fit.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    SERVICES — navy background
+    EDIT: Change service names, taglines, descriptions, bullet points
   ============================================================ -->
   <section class="services" id="services">
-    <canvas id="servicesCanvas" class="sec-canvas" aria-hidden="true"></canvas>
+    <canvas class="sec-canvas" id="servicesCanvas" aria-hidden="true"></canvas>
     <div class="services-inner">
 
       <!-- EDIT: Change section label -->
-      <span class="lbl fade-up">What We Do</span>
+      <span class="lbl fade-up">Our Services</span>
 
       <!-- EDIT: Change section headline -->
-      <h2 class="section-h2 fade-up">One partner. From hiring<br>to people systems.</h2>
+      <h2 class="section-h2 light fade-up">One partner. From hiring to people systems.</h2>
 
-      <div class="svc-grid stagger">
+      <div class="svc-grid">
 
-        <!-- EDIT: Update Recruitment service -->
+        <!-- LEFT SERVICE -->
         <div class="svc-col fade-up">
-          <!-- EDIT: Change this number if reordering -->
           <div class="svc-num">01</div>
           <!-- EDIT: Change service name -->
-          <h3><a href="recruitment.html">Recruitment</a></h3>
-          <!-- EDIT: Change this italic tagline -->
+          <h3>Recruitment</h3>
+          <!-- EDIT: Change tagline -->
           <span class="svc-tagline">Build your team right</span>
-          <!-- EDIT: Change this description -->
-          <p class="svc-desc">Assessment-led, curated hiring designed for speed and fit &mdash; not volume.</p>
+          <!-- EDIT: Change description -->
+          <p class="svc-desc">Assessment-led, curated hiring for startups and financial services teams. Fewer profiles. Better decisions. Faster hires.</p>
+          <!-- EDIT: Change bullet points -->
           <ul class="svc-list">
-            <!-- EDIT: Add, remove, or rewrite bullet points -->
             <li>Mid to senior hiring</li>
             <li>Startup hiring sprints</li>
             <li>Role definition &amp; assessment design</li>
           </ul>
-          <a href="recruitment.html" class="svc-explore">Explore Recruitment &rarr;</a>
+          <!-- EDIT: Change explore link text and href -->
+          <a href="recruitment.html" class="svc-explore">Explore Recruitment →</a>
         </div>
 
-        <!-- Vertical rule — desktop only -->
+        <!-- Vertical rule -->
         <div class="svc-rule"></div>
 
-        <!-- EDIT: Update Fractional HR service -->
+        <!-- RIGHT SERVICE -->
         <div class="svc-col fade-up">
           <div class="svc-num">02</div>
-          <h3><a href="fractional-hr.html">Fractional HR</a></h3>
+          <!-- EDIT: Change service name -->
+          <h3>Fractional HR</h3>
+          <!-- EDIT: Change tagline -->
           <span class="svc-tagline">Build your people function</span>
-          <p class="svc-desc">A complete HR setup and support system &mdash; without the full-time cost.</p>
+          <!-- EDIT: Change description -->
+          <p class="svc-desc">A complete HR function without the full-time cost. Policies, compliance, HRBP support, and people strategy for growing teams.</p>
+          <!-- EDIT: Change bullet points -->
           <ul class="svc-list">
             <li>Policies, compliance, and contracts</li>
             <li>HRBP support &amp; employee lifecycle</li>
             <li>Org design and people strategy</li>
           </ul>
-          <a href="fractional-hr.html" class="svc-explore">Explore Fractional HR &rarr;</a>
+          <!-- EDIT: Change explore link text and href -->
+          <a href="fractional-hr.html" class="svc-explore">Explore Fractional HR →</a>
         </div>
 
       </div>
@@ -1186,80 +1614,38 @@
 
 
   <!-- ============================================================
-    EDIT: ABOUT — Change headline, bio, and credibility stats
-  ============================================================ -->
-  <section class="about" id="about">
-    <canvas id="aboutCanvas" class="sec-canvas" aria-hidden="true"></canvas>
-    <div class="about-inner">
-
-      <!-- EDIT: Change section label -->
-      <span class="lbl fade-up">The Founder</span>
-
-      <!-- EDIT: Change section headline -->
-      <h2 class="section-h2 fade-up">Built from experience.<br>Designed for better hiring.</h2>
-
-      <!-- EDIT: Update founder bio -->
-      <p class="about-body fade-up">Shreya brings 10+ years of experience across NBFCs, BFSI, and high-growth startups &mdash; building and scaling teams from early-stage to 3000+ workforce setups. Every Sprint mandate is founder-led, always. No handoffs. No dilution.</p>
-
-      <!-- EDIT: Update the three stats (number + label) -->
-      <div class="stats-row stagger">
-
-        <div class="stat-item fade-up">
-          <!-- EDIT: Change stat — data-count sets the count-up target, data-suffix adds text after -->
-          <span class="stat-num" data-count="10" data-suffix="+">10+</span>
-          <!-- EDIT: Change stat label -->
-          <span class="stat-lbl">years across BFSI,<br>NBFC &amp; startups</span>
-        </div>
-
-        <div class="stat-item fade-up">
-          <!-- EDIT: This stat has no count-up (no data-count) — change text directly -->
-          <span class="stat-num">Founder-led</span>
-          <span class="stat-lbl">every mandate,<br>no handoffs</span>
-        </div>
-
-        <div class="stat-item fade-up">
-          <!-- EDIT: data-prefix shows before the count, data-count is the end number -->
-          <span class="stat-num" data-prefix="0 &rarr; " data-count="3000" data-suffix="+">0 &rarr; 3000+</span>
-          <span class="stat-lbl">team size<br>built from scratch</span>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ============================================================
-    EDIT: CONTACT — Change headline, body text, and email address
+    CONTACT — cream background
+    EDIT: Change headline, body text, email address
   ============================================================ -->
   <section class="contact" id="contact">
-    <canvas id="contactCanvas" class="sec-canvas" aria-hidden="true"></canvas>
+    <canvas class="sec-canvas" id="contactCanvas" aria-hidden="true"></canvas>
     <div class="contact-inner">
 
       <!-- EDIT: Change section label -->
-      <span class="lbl fade-up">Let&rsquo;s Talk</span>
+      <span class="lbl fade-up">Let's Talk</span>
 
       <!-- EDIT: Change section headline -->
-      <h2 class="section-h2 fade-up">Let&rsquo;s understand your<br>hiring challenge.</h2>
+      <h2 class="section-h2 fade-up">Let's understand your hiring challenge.</h2>
 
       <!-- EDIT: Change body text -->
-      <p class="contact-body fade-up">No decks. No pitches. Just a 20-minute conversation about your current hiring gaps and how we&rsquo;d approach them.</p>
+      <p class="contact-body fade-up">No decks. No pitches. Just a 20-minute conversation about your current hiring gaps and how we'd approach them.</p>
 
-      <div class="fade-up">
-        <!-- EDIT: Change button text -->
-        <button class="btn-primary open-modal">Start a conversation</button>
-
-        <!-- EDIT: Change email — update BOTH href (after mailto:) AND visible text -->
-        <span class="contact-alt">
-          or email directly at &mdash; <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a>
-        </span>
+      <!-- EDIT: Change CTA button text -->
+      <div class="cta-btn-group fade-up">
+        <a href="#" class="btn-primary open-modal">Book a 20-min discovery call</a>
+        <button class="btn-challenge open-form">Start a Conversation</button>
       </div>
+
+      <!-- EDIT: Change "or email directly" text and email address (href AND display text) -->
+      <span class="contact-alt fade-up">or email directly — <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a></span>
 
     </div>
   </section>
 
 
   <!-- ============================================================
-    EDIT: FOOTER
+    FOOTER
+    EDIT: Change description, links, contact details
   ============================================================ -->
   <footer class="footer">
     <div class="footer-inner">
@@ -1267,92 +1653,80 @@
       <!-- 4-column grid -->
       <div class="footer-grid">
 
-        <!-- Column 1: Brand + description -->
+        <!-- Col 1: Brand -->
         <div>
           <div class="footer-brand-logo">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
               <polyline points="1,1 9,10 1,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
               <polyline points="9,1 17,10 9,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
             </svg>
+            <!-- EDIT: Change company name if it changes -->
             Sprint People Solutions
           </div>
-          <!-- EDIT: Change this description -->
-          <p class="footer-desc">Assessment-led hiring and fractional HR for startups and financial services teams. Founder-led, always. No handoffs. Built for speed and fit.</p>
+          <!-- EDIT: Change footer description -->
+          <p class="footer-desc">Assessment-led hiring and fractional HR for startups and BFSI teams. Fewer profiles. Better hires.</p>
         </div>
 
-        <!-- Column 2: Quick Links -->
+        <!-- Col 2: Quick Links -->
         <div>
           <span class="footer-col-head">Quick Links</span>
-          <div class="footer-links">
-            <a href="#services">Services</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-            <!-- LINKEDIN: Uncomment and add your profile URL when ready
-                 <a href="https://linkedin.com/in/YOUR-PROFILE">LinkedIn</a>
-            -->
-          </div>
+          <ul class="footer-links">
+            <!-- EDIT: Update links if section IDs change -->
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <!-- LINKEDIN PLACEHOLDER: Uncomment and update URL when ready -->
+            <!-- <li><a href="https://www.linkedin.com/company/sprint-people-solutions/" target="_blank" rel="noopener">LinkedIn</a></li> -->
+          </ul>
         </div>
 
-        <!-- Column 3: Services -->
+        <!-- Col 3: Services -->
         <div>
           <span class="footer-col-head">Services</span>
-          <div class="footer-links">
-            <a href="recruitment.html">Recruitment</a>
-            <a href="fractional-hr.html">Fractional HR</a>
-          </div>
+          <ul class="footer-links">
+            <!-- EDIT: Update service links if filenames change -->
+            <li><a href="recruitment.html">Recruitment</a></li>
+            <li><a href="fractional-hr.html">Fractional HR</a></li>
+          </ul>
         </div>
 
-        <!-- Column 4: Contact Us -->
+        <!-- Col 4: Contact Us -->
         <div>
           <span class="footer-col-head">Contact Us</span>
-          <div class="footer-contact-list">
-
-            <!-- EDIT: Change email — update href AND display text -->
-            <div class="footer-contact-item">
-              <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <rect x="1" y="3" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M1 5l7 4.5L15 5" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-              <a href="mailto:shreya@sprintpeople.in">Email Us</a>
-            </div>
-
-            <!-- EDIT: Replace with real phone number -->
-            <div class="footer-contact-item">
-              <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 1.5h2.5L7 5 5 6.2a8.5 8.5 0 0 0 4.8 4.8L11 9l3.5 1.5V13a1 1 0 0 1-1 1C5.8 14 2 10.2 2 5.5A4 4 0 0 1 3 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-              <!-- EDIT: Replace XXXXX XXXXX with real number -->
-              <span>+91 77009 97802</span>
-            </div>
-
-            <div class="footer-contact-item">
-              <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 1a5 5 0 0 0-5 5c0 3.5 5 9 5 9s5-5.5 5-9a5 5 0 0 0-5-5z" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-              <span>Mumbai, India</span>
-            </div>
-
-          </div>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item">
+              <!-- Email icon -->
+              <span class="footer-contact-icon" aria-hidden="true">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <polyline points="2,4 12,13 22,4"/>
+                </svg>
+              </span>
+              <!-- EDIT: Change email address (href AND display text) -->
+              <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a>
+            </li>
+          </ul>
         </div>
 
       </div>
 
-      <!-- Get in Touch CTA -->
+      <!-- CTA band -->
       <div class="footer-cta">
         <div>
-          <span class="footer-cta-label">Get in Touch</span>
+          <span class="footer-cta-label">Ready to hire right?</span>
           <!-- EDIT: Change CTA headline -->
-          <div class="footer-cta-h">Ready to start hiring right?</div>
+          <div class="footer-cta-h">Book a 20-min call with Shreya.</div>
         </div>
-        <!-- EDIT: Change button text -->
-        <button class="btn-footer-cta open-modal">Start a conversation</button>
+        <!-- EDIT: Change CTA button text -->
+        <button class="btn-footer-cta open-modal">Check Calendar</button>
       </div>
 
-      <!-- EDIT: Update copyright year -->
+      <!-- Bottom bar -->
       <div class="footer-bottom">
+        <!-- EDIT: Change copyright year if needed -->
         <span>&copy; 2026 Sprint People Solutions</span>
         <span class="footer-legal-links">
+          <!-- EDIT: Update paths if privacy/terms files move -->
           <a href="privacy.html">Privacy Policy</a>
           <span>&middot;</span>
           <a href="terms.html">Terms of Use</a>
@@ -1364,37 +1738,89 @@
 
 
   <!-- ============================================================
-    MODAL — Contact form
-    FORMSPREE: Sign up at formspree.io → New Form → copy the form ID
-    → replace xdaynrqv in the JS below (search "xdaynrqv").
-    Free tier = 50 submissions/month, sends to your email.
-    Connect Google Sheets via Zapier in ~5 min (see README).
+    FORM MODAL — Submit your challenge
   ============================================================ -->
+  <div class="form-overlay" id="formOverlay">
+    <div class="form-panel">
+      <button class="form-close-btn" id="formClose" aria-label="Close">&times;</button>
+
+      <div id="formContent">
+        <span class="lbl">Start a Conversation</span>
+        <h3 class="form-h3">Tell us about your hiring challenge.</h3>
+
+        <form id="challengeForm" novalidate>
+          <div class="f-row">
+            <div class="f-group" id="fg-cname">
+              <label for="fc-name">Full name *</label>
+              <input type="text" id="fc-name" name="name" placeholder="Priya Mehta" />
+              <span class="f-errmsg">Please enter your name.</span>
+            </div>
+            <div class="f-group" id="fg-ccompany">
+              <label for="fc-company">Company *</label>
+              <input type="text" id="fc-company" name="company" placeholder="Acme Fintech" />
+              <span class="f-errmsg">Please enter your company.</span>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-group" id="fg-cemail">
+              <label for="fc-email">Work email *</label>
+              <input type="email" id="fc-email" name="email" placeholder="priya@acme.com" />
+              <span class="f-errmsg">Please enter a valid email.</span>
+            </div>
+            <div class="f-group">
+              <label for="fc-phone">Phone (optional)</label>
+              <input type="tel" id="fc-phone" name="phone" placeholder="+91 98765 43210" />
+            </div>
+          </div>
+          <div class="f-group" id="fg-cneed">
+            <label for="fc-need">What do you need? *</label>
+            <select id="fc-need" name="need">
+              <option value="" disabled selected>— Select one</option>
+              <option value="Recruitment">Recruitment</option>
+              <option value="Fractional HR">Fractional HR</option>
+              <option value="Both">Both</option>
+            </select>
+            <span class="f-errmsg">Please select an option.</span>
+          </div>
+          <div class="f-group">
+            <label for="fc-msg">Tell us about your challenge (optional)</label>
+            <textarea id="fc-msg" name="message" rows="3" placeholder="We're scaling from 40 to 100 people and need…"></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="formSubmit">Send message →</button>
+          <div class="form-global-err" id="formGlobalErr">
+            Something went wrong — please email <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a> directly.
+          </div>
+        </form>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-h">Thank you.</div>
+        <p class="form-success-p">Shreya will be in touch within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ============================================================
     CALENDLY LIGHTBOX
     CALENDLY: To update the booking link, change the data-url below
   ============================================================ -->
   <div class="cal-overlay" id="modalOverlay">
     <div class="cal-inner">
-
-      <!-- Close button -->
-      <button class="cal-close" id="modalClose" aria-label="Close booking">
-        &times; <span>Close</span>
-      </button>
-
+      <button class="cal-close" id="modalClose" aria-label="Close booking">&times; <span>Close</span></button>
       <!-- CALENDLY: Update data-url if your link changes -->
       <div class="calendly-inline-widget"
            data-url="https://calendly.com/shreya-sprintpeople/20min?hide_event_type_details=0&background_color=f5f0e8&text_color=1a1a2e&primary_color=c9a84c"
            style="width:100%;height:100%;min-width:320px;"></div>
-
     </div>
   </div>
 
 
   <!-- ============================================================
     JAVASCRIPT — No external libraries.
-    Sections: canvas, nav scroll, modal, form, scroll animations,
-              count-up stats, mobile nav.
+    Sections: 1. Hero canvas  2. Nav scroll  3. Calendly modal
+              4. Scroll fade-up  5. Why Sprint slide-in
+              6. Count-up stats  7. Mobile nav  8. Section canvases
   ============================================================ -->
   <script>
 
@@ -1411,19 +1837,17 @@
       resize();
       window.addEventListener('resize', resize);
 
-      /* Static anchor circle: large gold circle top-right, not moving */
+      /* Static anchor circle: large gold circle top-right */
       var anchor = { x: 1, y: 0, r: 600, color: '#C9A84C', a: 0.09 };
 
       /* Moving circles: mix of navy and gold, stroke only */
       var circles = [
-        /* navy */
         { r: 380, color: '#1A1A2E', a: 0.10, x:  180, y: 320, vx:  0.15, vy:  0.12 },
         { r: 440, color: '#1A1A2E', a: 0.10, x:  620, y: 180, vx: -0.18, vy:  0.20 },
         { r: 310, color: '#1A1A2E', a: 0.10, x:  420, y: 540, vx:  0.22, vy: -0.14 },
         { r: 360, color: '#1A1A2E', a: 0.10, x:  900, y: 390, vx: -0.13, vy:  0.17 },
         { r: 295, color: '#1A1A2E', a: 0.10, x:  140, y:  90, vx:  0.19, vy:  0.13 },
         { r: 500, color: '#1A1A2E', a: 0.10, x:  750, y: 620, vx: -0.11, vy: -0.16 },
-        /* gold */
         { r: 270, color: '#C9A84C', a: 0.14, x:  680, y: 210, vx:  0.16, vy: -0.21 },
         { r: 340, color: '#C9A84C', a: 0.14, x:  290, y: 460, vx: -0.19, vy:  0.14 },
         { r: 310, color: '#C9A84C', a: 0.14, x:  840, y: 480, vx:  0.13, vy:  0.19 },
@@ -1432,7 +1856,6 @@
       function frame() {
         ctx.clearRect(0, 0, W, H);
 
-        /* Draw static anchor */
         ctx.save();
         ctx.globalAlpha = anchor.a;
         ctx.strokeStyle = anchor.color;
@@ -1442,21 +1865,14 @@
         ctx.stroke();
         ctx.restore();
 
-        /* Draw and drift moving circles */
         for (var i = 0; i < circles.length; i++) {
           var c = circles[i];
-
-          /* Drift */
           c.x += c.vx;
           c.y += c.vy;
-
-          /* Soft bounce off canvas edges */
           if (c.x - c.r < 0) { c.x = c.r; c.vx = Math.abs(c.vx); }
           if (c.x + c.r > W) { c.x = W - c.r; c.vx = -Math.abs(c.vx); }
           if (c.y - c.r < 0) { c.y = c.r; c.vy = Math.abs(c.vy); }
           if (c.y + c.r > H) { c.y = H - c.r; c.vy = -Math.abs(c.vy); }
-
-          /* Stroke only */
           ctx.save();
           ctx.globalAlpha = c.a;
           ctx.strokeStyle = c.color;
@@ -1474,20 +1890,97 @@
     }());
 
 
-    /* ── 2. NAV SCROLL SHADOW + CTA REVEAL ── */
+    /* ── 2. NAV SCROLL SHADOW + CTA REVEAL + HIDE AT BOTTOM ── */
     (function () {
       var nav    = document.getElementById('siteNav');
       var navCta = nav.querySelector('.nav-cta');
+      var bottomInView = false;
+
       window.addEventListener('scroll', function () {
         var scrolled = window.scrollY > 60;
         var pastHero = window.scrollY > (window.innerHeight * 0.6);
         nav.classList.toggle('raised', scrolled);
-        if (navCta) navCta.classList.toggle('show', pastHero);
+        if (navCta) navCta.classList.toggle('show', pastHero && !bottomInView);
       }, { passive: true });
+
+      if ('IntersectionObserver' in window && navCta) {
+        var bottom = document.getElementById('contact');
+        if (bottom) {
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              bottomInView = entry.isIntersecting;
+              if (bottomInView) navCta.classList.remove('show');
+            });
+          }, { threshold: 0.15 }).observe(bottom);
+        }
+      }
     }());
 
 
-    /* ── CALENDLY LIGHTBOX OPEN / CLOSE ── */
+    /* ── 3a. FORM MODAL OPEN / CLOSE + SUBMISSION ── */
+    (function () {
+      var overlay  = document.getElementById('formOverlay');
+      var closeBtn = document.getElementById('formClose');
+      var triggers = document.querySelectorAll('.open-form');
+
+      function openForm() { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      function closeForm() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+      triggers.forEach(function (el) {
+        el.addEventListener('click', function (e) { e.preventDefault(); openForm(); });
+      });
+      closeBtn.addEventListener('click', closeForm);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeForm(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeForm();
+      });
+
+      /* form submission */
+      var form      = document.getElementById('challengeForm');
+      var submitBtn = document.getElementById('formSubmit');
+      var formWrap  = document.getElementById('formContent');
+      var success   = document.getElementById('formSuccess');
+      var globalErr = document.getElementById('formGlobalErr');
+
+      function chk(id, gid, isEmail) {
+        var el = document.getElementById(id), g = document.getElementById(gid);
+        var v = (el.value || '').trim();
+        var ok = isEmail ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : v.length > 0;
+        el.classList.toggle('f-err', !ok);
+        g.classList.toggle('has-err', !ok);
+        return ok;
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var valid = chk('fc-name','fg-cname',false) & chk('fc-company','fg-ccompany',false) & chk('fc-email','fg-cemail',true) & chk('fc-need','fg-cneed',false);
+        if (!valid) return;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+        globalErr.classList.remove('show');
+        fetch('https://formspree.io/f/xdaynrqv', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('fc-name').value.trim(),
+            company: document.getElementById('fc-company').value.trim(),
+            email: document.getElementById('fc-email').value.trim(),
+            phone: document.getElementById('fc-phone').value.trim(),
+            need: document.getElementById('fc-need').value,
+            message: document.getElementById('fc-msg').value.trim()
+          })
+        }).then(function (res) {
+          if (res.ok) { formWrap.style.display = 'none'; success.classList.add('show'); }
+          else throw new Error('server');
+        }).catch(function () {
+          globalErr.classList.add('show');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send message →';
+        });
+      });
+    }());
+
+    /* ── 3b. CALENDLY LIGHTBOX OPEN / CLOSE ── */
     (function () {
       var overlay  = document.getElementById('modalOverlay');
       var closeBtn = document.getElementById('modalClose');
@@ -1519,7 +2012,7 @@
     }());
 
 
-    /* ── 5. SCROLL FADE-UP (fade-up class) ── */
+    /* ── 4. SCROLL FADE-UP ── */
     (function () {
       var els = document.querySelectorAll('.fade-up');
 
@@ -1541,7 +2034,7 @@
     }());
 
 
-    /* ── 6. WHY SPRINT — slide in from left ── */
+    /* ── 5. WHY SPRINT — slide in from left ── */
     (function () {
       var items = document.querySelectorAll('.why-item');
       if (!items.length) return;
@@ -1567,7 +2060,7 @@
     }());
 
 
-    /* ── 7. COUNT-UP ANIMATION (stats with data-count) ── */
+    /* ── 6. COUNT-UP ANIMATION (stats with data-count) ── */
     (function () {
       var nums = document.querySelectorAll('[data-count]');
       if (!nums.length) return;
@@ -1583,9 +2076,8 @@
           if (!start) start = ts;
           var elapsed  = ts - start;
           var progress = Math.min(elapsed / duration, 1);
-          /* Ease-out cubic */
-          var eased = 1 - Math.pow(1 - progress, 3);
-          var value = Math.round(target * eased);
+          var eased    = 1 - Math.pow(1 - progress, 3);
+          var value    = Math.round(target * eased);
           el.textContent = prefix + (value >= 1000 ? value.toLocaleString() : value) + suffix;
           if (progress < 1) requestAnimationFrame(step);
         }
@@ -1593,10 +2085,7 @@
         requestAnimationFrame(step);
       }
 
-      if (!('IntersectionObserver' in window)) {
-        /* No IO support — just show final values (already in HTML) */
-        return;
-      }
+      if (!('IntersectionObserver' in window)) { return; }
 
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -1612,7 +2101,7 @@
     }());
 
 
-    /* ── 8. MOBILE NAV TOGGLE ── */
+    /* ── 7. MOBILE NAV TOGGLE ── */
     (function () {
       var btn   = document.getElementById('navHam');
       var links = document.getElementById('navLinks');
@@ -1633,9 +2122,8 @@
     }());
 
 
-    /* ── 9. SECTION CANVASES ── */
+    /* ── 8. SECTION CANVASES ── */
 
-    /* Helper: set up a canvas that resizes with its parent element */
     function initCanvas(id, shapes, drawShape) {
       var canvas = document.getElementById(id);
       if (!canvas) return;
@@ -1672,47 +2160,25 @@
       requestAnimationFrame(frame);
     }
 
-    /* WHY SPRINT — floating diamonds (rotated squares) */
-    initCanvas('whyCanvas', [
-      { r:  90, color: '#1A1A2E', a: 0.10, x:  80, y: 120, vx:  0.14, vy:  0.10, rot: 0,    vr:  0.003 },
-      { r: 130, color: '#1A1A2E', a: 0.10, x: 400, y: 340, vx: -0.12, vy:  0.15, rot: 0.4,  vr: -0.002 },
-      { r:  70, color: '#C9A84C', a: 0.14, x: 700, y:  90, vx:  0.18, vy:  0.12, rot: 0.8,  vr:  0.004 },
-      { r: 110, color: '#C9A84C', a: 0.14, x: 950, y: 380, vx: -0.15, vy: -0.11, rot: 0.2,  vr: -0.003 },
-      { r:  85, color: '#1A1A2E', a: 0.10, x: 200, y: 500, vx:  0.11, vy: -0.14, rot: 0.6,  vr:  0.002 },
-      { r: 100, color: '#C9A84C', a: 0.14, x:1100, y: 220, vx: -0.13, vy:  0.16, rot: 1.0,  vr:  0.003 },
-    ], function(ctx, s) {
-      var h = s.r;
-      ctx.beginPath();
-      ctx.moveTo(0, -h);
-      ctx.lineTo(h, 0);
-      ctx.lineTo(0, h);
-      ctx.lineTo(-h, 0);
-      ctx.closePath();
-      ctx.stroke();
-    });
-
-    /* SERVICES — floating wide rectangles (horizontal bars) */
-    initCanvas('servicesCanvas', [
-      { r: 90, w: 220, color: '#FFFFFF', a: 0.10, x: 120, y: 100, vx:  0.16, vy:  0.10, rot: 0,    vr:  0.002 },
-      { r: 90, w: 300, color: '#C9A84C', a: 0.14, x: 600, y: 280, vx: -0.12, vy:  0.13, rot: 0.15, vr: -0.002 },
-      { r: 60, w: 180, color: '#FFFFFF', a: 0.10, x: 900, y:  80, vx:  0.14, vy:  0.09, rot:-0.10, vr:  0.003 },
-      { r: 70, w: 240, color: '#C9A84C', a: 0.14, x: 300, y: 420, vx: -0.10, vy: -0.12, rot: 0.20, vr:  0.002 },
-      { r: 50, w: 160, color: '#FFFFFF', a: 0.10, x:1050, y: 350, vx: -0.15, vy:  0.11, rot:-0.05, vr: -0.003 },
-      { r: 80, w: 260, color: '#C9A84C', a: 0.14, x: 750, y: 480, vx:  0.11, vy: -0.10, rot: 0.30, vr:  0.002 },
+    /* PROCESS — floating rectangles on navy */
+    initCanvas('processCanvas', [
+      { r: 90, w: 220, color: '#FFFFFF', a: 0.08, x: 120, y: 100, vx:  0.16, vy:  0.10, rot: 0,    vr:  0.002 },
+      { r: 90, w: 300, color: '#C9A84C', a: 0.12, x: 600, y: 280, vx: -0.12, vy:  0.13, rot: 0.15, vr: -0.002 },
+      { r: 60, w: 180, color: '#FFFFFF', a: 0.08, x: 900, y:  80, vx:  0.14, vy:  0.09, rot:-0.10, vr:  0.003 },
+      { r: 70, w: 240, color: '#C9A84C', a: 0.12, x: 300, y: 420, vx: -0.10, vy: -0.12, rot: 0.20, vr:  0.002 },
+      { r: 50, w: 160, color: '#FFFFFF', a: 0.08, x:1050, y: 350, vx: -0.15, vy:  0.11, rot:-0.05, vr: -0.003 },
     ], function(ctx, s) {
       ctx.strokeRect(-s.w / 2, -s.r / 2, s.w, s.r);
     });
 
-    /* ABOUT — floating hexagons */
-    initCanvas('aboutCanvas', [
-      { r: 100, color: '#1A1A2E', a: 0.10, x: 100, y: 150, vx:  0.13, vy:  0.10, rot: 0,   vr:  0.002 },
-      { r: 130, color: '#C9A84C', a: 0.14, x: 500, y:  80, vx: -0.11, vy:  0.14, rot: 0.5, vr: -0.003 },
-      { r:  80, color: '#1A1A2E', a: 0.10, x: 850, y: 320, vx:  0.15, vy: -0.12, rot: 0.3, vr:  0.003 },
-      { r: 110, color: '#C9A84C', a: 0.14, x: 250, y: 400, vx: -0.14, vy:  0.09, rot: 1.0, vr:  0.002 },
-      { r:  90, color: '#1A1A2E', a: 0.10, x:1000, y: 180, vx: -0.12, vy:  0.13, rot: 0.8, vr: -0.002 },
-      { r:  75, color: '#C9A84C', a: 0.14, x: 680, y: 430, vx:  0.10, vy: -0.11, rot: 0.2, vr:  0.003 },
+    /* FOUNDER — floating hexagons on cream */
+    initCanvas('founderCanvas', [
+      { r: 100, color: '#1A1A2E', a: 0.08, x: 100, y: 150, vx:  0.13, vy:  0.10, rot: 0,   vr:  0.002 },
+      { r: 130, color: '#C9A84C', a: 0.11, x: 500, y:  80, vx: -0.11, vy:  0.14, rot: 0.5, vr: -0.003 },
+      { r:  80, color: '#1A1A2E', a: 0.08, x: 850, y: 320, vx:  0.15, vy: -0.12, rot: 0.3, vr:  0.003 },
+      { r: 110, color: '#C9A84C', a: 0.11, x: 250, y: 400, vx: -0.14, vy:  0.09, rot: 1.0, vr:  0.002 },
+      { r:  90, color: '#1A1A2E', a: 0.08, x:1000, y: 180, vx: -0.12, vy:  0.13, rot: 0.8, vr: -0.002 },
     ], function(ctx, s) {
-      /* Regular hexagon — 6 sides */
       ctx.beginPath();
       for (var j = 0; j < 6; j++) {
         var a = (Math.PI / 3) * j;
@@ -1724,16 +2190,46 @@
       ctx.stroke();
     });
 
-    /* CONTACT — floating pentagons */
-    initCanvas('contactCanvas', [
-      { r:  90, color: '#1A1A2E', a: 0.10, x: 120, y: 100, vx:  0.14, vy:  0.10, rot: 0,   vr:  0.003 },
-      { r: 120, color: '#C9A84C', a: 0.14, x: 550, y: 250, vx: -0.12, vy:  0.13, rot: 0.5, vr: -0.002 },
-      { r:  80, color: '#1A1A2E', a: 0.10, x: 900, y:  80, vx:  0.11, vy:  0.12, rot: 0.3, vr:  0.004 },
-      { r: 100, color: '#C9A84C', a: 0.14, x: 280, y: 340, vx: -0.13, vy: -0.10, rot: 1.2, vr:  0.002 },
-      { r:  70, color: '#1A1A2E', a: 0.10, x:1050, y: 300, vx: -0.10, vy:  0.14, rot: 0.6, vr: -0.003 },
-      { r: 110, color: '#C9A84C', a: 0.14, x: 700, y: 400, vx:  0.12, vy: -0.11, rot: 0.9, vr:  0.002 },
+    /* SERVICES — floating wide rectangles on navy */
+    initCanvas('servicesCanvas', [
+      { r: 90, w: 220, color: '#FFFFFF', a: 0.10, x: 120, y: 100, vx:  0.16, vy:  0.10, rot: 0,    vr:  0.002 },
+      { r: 90, w: 300, color: '#C9A84C', a: 0.14, x: 600, y: 280, vx: -0.12, vy:  0.13, rot: 0.15, vr: -0.002 },
+      { r: 60, w: 180, color: '#FFFFFF', a: 0.10, x: 900, y:  80, vx:  0.14, vy:  0.09, rot:-0.10, vr:  0.003 },
+      { r: 70, w: 240, color: '#C9A84C', a: 0.14, x: 300, y: 420, vx: -0.10, vy: -0.12, rot: 0.20, vr:  0.002 },
+      { r: 50, w: 160, color: '#FFFFFF', a: 0.10, x:1050, y: 350, vx: -0.15, vy:  0.11, rot:-0.05, vr: -0.003 },
+      { r: 80, w: 260, color: '#C9A84C', a: 0.14, x: 750, y: 480, vx:  0.11, vy: -0.10, rot: 0.30, vr:  0.002 },
     ], function(ctx, s) {
-      /* Regular pentagon — 5 sides */
+      ctx.strokeRect(-s.w / 2, -s.r / 2, s.w, s.r);
+    });
+
+    /* PROBLEM — floating hexagons on cream */
+    initCanvas('problemCanvas', [
+      { r: 110, color: '#1A1A2E', a: 0.07, x:  80, y: 120, vx:  0.12, vy:  0.09, rot: 0,   vr:  0.002 },
+      { r: 140, color: '#C9A84C', a: 0.09, x: 480, y:  60, vx: -0.10, vy:  0.12, rot: 0.4, vr: -0.002 },
+      { r:  85, color: '#1A1A2E', a: 0.07, x: 920, y: 280, vx:  0.14, vy: -0.11, rot: 0.2, vr:  0.003 },
+      { r: 120, color: '#C9A84C', a: 0.09, x: 230, y: 380, vx: -0.13, vy:  0.08, rot: 0.9, vr:  0.002 },
+      { r:  95, color: '#1A1A2E', a: 0.07, x:1050, y: 160, vx: -0.11, vy:  0.12, rot: 0.7, vr: -0.002 },
+      { r: 105, color: '#C9A84C', a: 0.09, x: 700, y: 350, vx:  0.09, vy: -0.10, rot: 1.1, vr:  0.003 },
+    ], function(ctx, s) {
+      ctx.beginPath();
+      for (var j = 0; j < 6; j++) {
+        var a = (Math.PI / 3) * j;
+        var px = s.r * Math.cos(a);
+        var py = s.r * Math.sin(a);
+        if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.stroke();
+    });
+
+    /* CONTACT — floating pentagons on cream */
+    initCanvas('contactCanvas', [
+      { r:  90, color: '#1A1A2E', a: 0.08, x: 120, y: 100, vx:  0.14, vy:  0.10, rot: 0,   vr:  0.003 },
+      { r: 120, color: '#C9A84C', a: 0.11, x: 550, y: 250, vx: -0.12, vy:  0.13, rot: 0.5, vr: -0.002 },
+      { r:  80, color: '#1A1A2E', a: 0.08, x: 900, y:  80, vx:  0.11, vy:  0.12, rot: 0.3, vr:  0.004 },
+      { r: 100, color: '#C9A84C', a: 0.11, x: 280, y: 340, vx: -0.13, vy: -0.10, rot: 1.2, vr:  0.002 },
+      { r:  70, color: '#1A1A2E', a: 0.08, x:1050, y: 300, vx: -0.10, vy:  0.14, rot: 0.6, vr: -0.003 },
+    ], function(ctx, s) {
       ctx.beginPath();
       for (var j = 0; j < 5; j++) {
         var a = (2 * Math.PI / 5) * j - Math.PI / 2;
