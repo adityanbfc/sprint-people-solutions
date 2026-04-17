@@ -1,1 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fractional HR — Sprint People Solutions</title>
+  <meta name="description" content="A complete HR function without the full-time cost. Policies, compliance, HRBP support, and people strategy for startups and growing teams." />
 
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@900&family=Hanken+Grotesk:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <!-- Calendly inline widget -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+  <style>
+
+    /* ====================================================
+       DESIGN TOKENS
+    ==================================================== */
+    :root {
+      --white:      #FFFFFF;
+      --cream:      #F5F0E8;
+      --navy:       #1A1A2E;
+      --navy-mid:   #252640;
+      --gold:       #C9A84C;
+      --gold-light: rgba(201,168,76,0.12);
+      --font-head:  'Epilogue', sans-serif;
+      --font-body:  'Hanken Grotesk', sans-serif;
+      --max-w:      1200px;
+      --g:          48px;
+      --gm:         24px;
+    }
+
+    /* ====================================================
+       RESET & BASE
+    ==================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.7;
+      background: var(--white);
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 { font-family: var(--font-head); font-weight: 900; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: var(--font-body); }
+    ul { list-style: none; }
+
+    /* ====================================================
+       TYPOGRAPHY — SECTION LABELS
+    ==================================================== */
+    .lbl {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    /* ====================================================
+       SECTION HEADINGS
+    ==================================================== */
+    .section-h2 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(44px, 6vw, 84px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 56px;
+    }
+
+    .section-h2.white { color: var(--white); }
+
+    /* ====================================================
+       CTA BUTTON GROUP
+    ==================================================== */
+    .cta-btn-group {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .btn-challenge-light {
+      display: inline-block;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 18px;
+      padding: 15px 40px;
+      border: 1px solid rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-challenge-light:hover { background: var(--white); color: var(--navy); }
+
+    /* ====================================================
+       FORM MODAL
+    ==================================================== */
+    .form-overlay {
+      position: fixed; inset: 0; z-index: 1001;
+      background: rgba(26,26,46,0.88);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    }
+    .form-overlay.open { opacity: 1; pointer-events: all; }
+    .form-panel {
+      background: var(--white); max-width: 520px; width: 100%;
+      padding: 56px 48px; position: relative; max-height: 92vh; overflow-y: auto;
+      transform: translateY(24px); transition: transform 0.30s ease;
+    }
+    .form-overlay.open .form-panel { transform: none; }
+    .form-close-btn {
+      position: absolute; top: 20px; right: 22px; background: none; border: none;
+      font-size: 26px; line-height: 1; color: var(--navy); opacity: 0.38;
+      cursor: pointer; padding: 4px 8px; transition: opacity 0.2s ease;
+    }
+    .form-close-btn:hover { opacity: 1; }
+    .form-h3 {
+      font-family: var(--font-head); font-weight: 900; font-size: 28px;
+      letter-spacing: -0.025em; color: var(--navy); line-height: 1.05; margin-bottom: 32px;
+    }
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .f-group { margin-bottom: 18px; }
+    .f-group label {
+      display: block; font-size: 16px; font-weight: 400; letter-spacing: 0.10em;
+      text-transform: uppercase; color: var(--navy); opacity: 0.52; margin-bottom: 8px;
+    }
+    .f-group input, .f-group select, .f-group textarea {
+      width: 100%; font-family: var(--font-body); font-weight: 300; font-size: 15px;
+      color: var(--navy); background: var(--white); border: 1px solid rgba(26,26,46,0.18);
+      padding: 13px 16px; outline: none; border-radius: 0; appearance: none;
+      -webkit-appearance: none; transition: border-color 0.2s ease; line-height: 1.5;
+    }
+    .f-group input:focus, .f-group select:focus, .f-group textarea:focus { border-color: var(--gold); }
+    .f-group input.f-err, .f-group select.f-err, .f-group textarea.f-err { border-color: #b03025; }
+    .f-errmsg { display: none; font-size: 14px; color: #b03025; margin-top: 5px; }
+    .f-group.has-err .f-errmsg { display: block; }
+    .f-group textarea { resize: vertical; min-height: 96px; }
+    .f-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%231A1A2E' fill-opacity='0.4' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+    }
+    .btn-submit {
+      width: 100%; background: var(--navy); color: var(--cream);
+      font-family: var(--font-head); font-weight: 900; font-size: 15px;
+      letter-spacing: 0.01em; padding: 16px; border: none; cursor: pointer;
+      margin-top: 8px; transition: opacity 0.25s ease;
+    }
+    .btn-submit:hover { opacity: 0.85; }
+    .btn-submit:disabled { opacity: 0.40; cursor: not-allowed; }
+    .form-success { display: none; text-align: center; padding: 40px 0 16px; }
+    .form-success.show { display: block; }
+    .form-success-h { font-family: var(--font-head); font-weight: 900; font-size: 28px; letter-spacing: -0.025em; color: var(--navy); margin-bottom: 12px; }
+    .form-success-p { font-size: 16px; font-weight: 300; color: var(--navy); opacity: 0.60; line-height: 1.6; }
+    .form-global-err { display: none; font-size: 16px; color: #b03025; background: rgba(176,48,37,0.06); border: 1px solid rgba(176,48,37,0.16); padding: 11px 14px; margin-top: 12px; }
+    .form-global-err.show { display: block; }
+    @media (max-width: 600px) { .form-panel { padding: 40px 24px; } .f-row { grid-template-columns: 1fr; } }
+
+    /* ====================================================
+       BUTTONS
+    ==================================================== */
+    .btn-primary {
+      display: inline-block;
+      background: var(--navy);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      padding: 16px 40px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.25s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-primary-light {
+      display: inline-block;
+      background: var(--white);
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      padding: 16px 40px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.25s ease;
+    }
+    .btn-primary-light:hover { opacity: 0.85; }
+
+    /* ====================================================
+       SCROLL FADE-UP ANIMATIONS
+    ==================================================== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    .stagger > .fade-up:nth-child(1) { transition-delay: 0.00s; }
+    .stagger > .fade-up:nth-child(2) { transition-delay: 0.10s; }
+    .stagger > .fade-up:nth-child(3) { transition-delay: 0.20s; }
+    .stagger > .fade-up:nth-child(4) { transition-delay: 0.30s; }
+    .stagger > .fade-up:nth-child(5) { transition-delay: 0.40s; }
+
+    /* Slide-in items */
+    .slide-item {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .slide-item.visible { opacity: 1; transform: none; }
+
+    /* Page-load hero animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .h-anim {
+      opacity: 0;
+      animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .h-anim-1 { animation-delay: 0.00s; }
+    .h-anim-2 { animation-delay: 0.15s; }
+    .h-anim-3 { animation-delay: 0.30s; }
+    .h-anim-4 { animation-delay: 0.45s; }
+
+    /* ====================================================
+       NAV
+    ==================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 300;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .nav.raised { box-shadow: 0 2px 24px rgba(0,0,0,0.25); }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--g);
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo svg { flex-shrink: 0; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--white);
+      opacity: 0.65;
+      transition: opacity 0.2s ease;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-cta {
+      font-size: 15px !important;
+      font-weight: 400;
+      opacity: 0 !important;
+      pointer-events: none;
+      color: var(--white) !important;
+      border: 1px solid rgba(255,255,255,0.40) !important;
+      padding: 10px 22px;
+      transition: opacity 0.35s ease, background 0.25s ease, color 0.25s ease !important;
+    }
+    .nav-cta:hover {
+      background: var(--white) !important;
+      color: var(--navy) !important;
+    }
+    .nav-cta.show {
+      opacity: 1 !important;
+      pointer-events: auto;
+    }
+
+    .nav-ham {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-ham span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--white);
+      transition: all 0.28s ease;
+      transform-origin: center;
+    }
+    .nav-ham.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-ham.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-ham.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 var(--gm); }
+      .nav-ham { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: var(--navy);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px var(--gm);
+        gap: 18px;
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ====================================================
+       BACK BAR
+    ==================================================== */
+    .back-bar {
+      background: var(--cream);
+      border-bottom: 1px solid rgba(26,26,46,0.08);
+      padding: 18px var(--g);
+    }
+    .back-bar a {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .back-bar a:hover { opacity: 1; }
+    .back-bar .back-arrow { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .back-bar { padding: 16px var(--gm); }
+    }
+
+    /* ====================================================
+       SECTION WRAPPER
+    ==================================================== */
+    .sec-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .bg-white { background: var(--white); }
+    .bg-cream  { background: var(--cream); }
+    .bg-navy   { background: var(--navy); }
+
+    .sec-pad { padding: 112px var(--g); }
+
+    @media (max-width: 768px) {
+      .sec-pad { padding: 72px var(--gm); }
+    }
+
+    /* ====================================================
+       SUB-PAGE HERO — cream background
+    ==================================================== */
+    .sub-hero {
+      background: var(--cream);
+      padding: 108px var(--g) 108px;
+    }
+    .sub-hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .sub-h1 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(48px, 6vw, 84px);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      max-width: 900px;
+      margin-bottom: 28px;
+    }
+
+    .sub-hero-sub {
+      font-weight: 300;
+      font-size: 21px;
+      line-height: 1.7;
+      color: var(--navy);
+      opacity: 0.65;
+      max-width: 560px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 768px) {
+      .sub-hero { padding: 72px var(--gm); }
+    }
+
+    /* ====================================================
+       SECTION 1 — WHAT'S INCLUDED — three columns (white)
+    ==================================================== */
+    .include-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 8px;
+    }
+
+    .include-col {
+      padding: 40px 48px 40px 0;
+      border-right: 1px solid rgba(26,26,46,0.10);
+    }
+    .include-col:last-child { border-right: none; padding-right: 0; }
+    .include-col:not(:first-child) { padding-left: 48px; }
+
+    .include-col-label {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(22px, 2.5vw, 30px);
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .include-col-sub {
+      display: block;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .include-list li {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.68;
+      line-height: 1.8;
+      padding-left: 20px;
+      position: relative;
+    }
+    .include-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      opacity: 0.65;
+    }
+
+    @media (max-width: 768px) {
+      .include-grid { grid-template-columns: 1fr; }
+      .include-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(26,26,46,0.10);
+        padding: 36px 0 !important;
+      }
+      .include-col:last-child { border-bottom: none; }
+    }
+
+    /* ====================================================
+       SECTION 2 — HOW IT WORKS — four steps (navy)
+    ==================================================== */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 8px;
+    }
+
+    .step-col {
+      padding: 40px 32px 40px 0;
+      border-right: 1px solid rgba(255,255,255,0.10);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .step-col:last-child { border-right: none; padding-right: 0; }
+    .step-col:not(:first-child) { padding-left: 32px; }
+    .step-col.visible { opacity: 1; transform: none; }
+
+    .step-num {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(40px, 4vw, 60px);
+      color: var(--gold);
+      opacity: 0.30;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .step-col strong {
+      display: block;
+      font-weight: 400;
+      font-size: 20px;
+      color: var(--white);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .step-col p {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.60);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .step-col {
+        border-bottom: 1px solid rgba(255,255,255,0.10);
+        padding: 32px 0 !important;
+      }
+      .steps-grid .step-col:nth-child(odd) {
+        padding-right: 16px !important;
+        border-right: 1px solid rgba(255,255,255,0.10);
+      }
+      .steps-grid .step-col:nth-child(even) {
+        padding-left: 16px !important;
+      }
+      .steps-grid .step-col:nth-last-child(-n+2) { border-bottom: none; }
+    }
+
+    @media (max-width: 480px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .step-col {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+        padding: 28px 0 !important;
+      }
+      .step-col:last-child { border-bottom: none !important; }
+    }
+
+    /* ====================================================
+       SECTION 3 — WHY FRACTIONAL — numbered statements (cream)
+    ==================================================== */
+    .why-frac-list {
+      margin-top: 8px;
+    }
+
+    .why-frac-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+      padding: 44px 0;
+      border-top: 1px solid rgba(26,26,46,0.10);
+    }
+    .why-frac-item:last-child { border-bottom: 1px solid rgba(26,26,46,0.10); }
+
+    .why-frac-num {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(48px, 5vw, 72px);
+      color: var(--gold);
+      opacity: 0.25;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+
+    .why-frac-body strong {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(22px, 2.8vw, 34px);
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .why-frac-body p {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--navy);
+      opacity: 0.65;
+      line-height: 1.7;
+      max-width: 740px;
+    }
+
+    @media (max-width: 768px) {
+      .why-frac-item { gap: 24px; }
+      .why-frac-num { font-size: 44px; min-width: 52px; }
+    }
+
+    /* ====================================================
+       FINAL CTA — navy
+    ==================================================== */
+    .final-cta {
+      background: var(--navy);
+      padding: 112px var(--g);
+      text-align: center;
+    }
+    .final-cta-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .final-cta h2 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .final-cta p {
+      font-weight: 300;
+      font-size: 20px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 44px;
+    }
+
+    .final-back {
+      display: block;
+      margin-top: 28px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.50);
+      transition: color 0.2s ease;
+    }
+    .final-back:hover { color: var(--white); }
+
+    @media (max-width: 768px) {
+      .final-cta { padding: 72px var(--gm); }
+    }
+
+    /* ====================================================
+       FOOTER
+    ==================================================== */
+    .footer {
+      background: var(--navy);
+      padding: 72px var(--g) 0;
+    }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 0 56px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .footer-brand-logo svg { flex-shrink: 0; }
+    .footer-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.50);
+      line-height: 1.8;
+    }
+    .footer-col-head {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .footer-links a {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+    .footer-contact-item a {
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s ease;
+    }
+    .footer-contact-item a:hover { color: var(--white); }
+    .footer-contact-icon { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+
+    .footer-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      padding: 56px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-cta-label {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .footer-cta-h {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(26px, 3vw, 42px);
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .btn-footer-cta {
+      flex-shrink: 0;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      padding: 16px 40px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.25s ease;
+    }
+    .btn-footer-cta:hover { opacity: 0.85; }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 28px 0;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.28);
+    }
+    .footer-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.28);
+    }
+    .footer-legal-links a {
+      color: rgba(255,255,255,0.28);
+      transition: color 0.2s ease;
+    }
+    .footer-legal-links a:hover { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .footer { padding: 56px var(--gm) 0; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 48px; }
+      .footer-cta { flex-direction: column; align-items: flex-start; gap: 24px; padding: 40px 0; }
+      .btn-footer-cta { width: 100%; text-align: center; }
+      .footer-cta-h { font-size: clamp(22px, 6vw, 32px); }
+      .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+    }
+
+    /* ====================================================
+       MODAL
+    ==================================================== */
+    /* ── CALENDLY FULL-SCREEN LIGHTBOX ── */
+    .cal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(26,26,46,0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .cal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .cal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 1080px;
+      height: 90vh;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .cal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      z-index: 10;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.45;
+      padding: 8px 12px;
+      transition: opacity 0.2s ease;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .cal-close:hover { opacity: 1; }
+    .cal-close span { font-size: 13px; }
+    .calendly-inline-widget {
+      flex: 1;
+      width: 100% !important;
+      height: 100% !important;
+      border: none;
+    }
+    @media (max-width: 768px) {
+      .cal-overlay { padding: 0; }
+      .cal-inner { width: 100%; height: 100vh; max-width: 100%; }
+      .cal-close { top: 12px; right: 12px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+    EDIT: NAV — logo links to index.html, all links back to homepage
+  ============================================================ -->
+  <nav class="nav" id="siteNav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <polyline points="1,1 9,10 1,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+          <polyline points="9,1 17,10 9,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+        </svg>
+        Sprint
+      </a>
+
+      <button class="nav-ham" id="navHam" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="/#services">Services</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+
+        <!-- PHASE 2: Uncomment when JD–CV Match Tool is live -->
+        <!-- <a href="/match">JD&ndash;CV Match</a> -->
+
+        <!-- PHASE 3: Uncomment when Open Mandates page is live -->
+        <!-- <a href="/mandates">Open Mandates</a> -->
+
+        <a href="#" class="nav-cta open-modal">Book a call</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Back to home bar -->
+  <div class="back-bar">
+    <a href="/"><span class="back-arrow">←</span> Back to home</a>
+  </div>
+
+
+  <!-- ============================================================
+    EDIT: HERO — Change label, headline, and sub-line
+  ============================================================ -->
+  <section class="sub-hero">
+    <div class="sub-hero-inner">
+
+      <!-- EDIT: Change section label -->
+      <span class="lbl h-anim h-anim-1">Fractional HR</span>
+
+      <!-- EDIT: Change this headline -->
+      <h1 class="sub-h1 h-anim h-anim-2">A complete HR function.<br>Without the full-time cost.</h1>
+
+      <!-- EDIT: Change this sub-line -->
+      <p class="sub-hero-sub h-anim h-anim-3">HR leadership and execution built into your team &mdash; at the stage and scale you actually need it.</p>
+
+      <!-- EDIT: Change button text -->
+      <div class="h-anim h-anim-4">
+        <button class="btn-primary open-modal">Book a call</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    EDIT: SECTION 1 — WHAT'S INCLUDED — Change pillars and lists
+  ============================================================ -->
+  <section class="bg-white sec-pad">
+    <div class="sec-inner">
+
+      <!-- EDIT: Change section label -->
+      <span class="lbl fade-up">What&rsquo;s Included</span>
+
+      <!-- EDIT: Change section headline -->
+      <h2 class="section-h2 fade-up">Build it. Run it. Advise on it.</h2>
+
+      <div class="include-grid stagger">
+
+        <!-- EDIT: Change this pillar -->
+        <div class="include-col fade-up">
+          <span class="include-col-label">Build</span>
+          <span class="include-col-sub">Set up from scratch</span>
+          <ul class="include-list">
+            <li>HR policies and employee handbook</li>
+            <li>Offer letters and employment contracts</li>
+            <li>Onboarding process design</li>
+            <li>Org structure and role clarity</li>
+          </ul>
+        </div>
+
+        <!-- EDIT: Change this pillar -->
+        <div class="include-col fade-up">
+          <span class="include-col-label">Run</span>
+          <span class="include-col-sub">Keep it running smoothly</span>
+          <ul class="include-list">
+            <li>Employee lifecycle management</li>
+            <li>Performance review frameworks</li>
+            <li>Compliance and statutory filings</li>
+            <li>HRBP support for managers</li>
+          </ul>
+        </div>
+
+        <!-- EDIT: Change this pillar -->
+        <div class="include-col fade-up">
+          <span class="include-col-label">Advise</span>
+          <span class="include-col-sub">Make better people decisions</span>
+          <ul class="include-list">
+            <li>Org design and restructuring</li>
+            <li>Compensation benchmarking</li>
+            <li>Leadership team support</li>
+            <li>Culture and engagement frameworks</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    EDIT: SECTION 2 — HOW IT WORKS — Change step titles and descriptions
+  ============================================================ -->
+  <section class="bg-navy sec-pad">
+    <div class="sec-inner">
+
+      <!-- EDIT: Change section label -->
+      <span class="lbl fade-up">How It Works</span>
+
+      <!-- EDIT: Change section headline -->
+      <h2 class="section-h2 white fade-up">Embedded from day one.<br>Not advising from outside.</h2>
+
+      <div class="steps-grid">
+
+        <!-- EDIT: Change step content -->
+        <div class="step-col">
+          <span class="step-num">01</span>
+          <strong>Diagnose</strong>
+          <p>We audit your current people setup, map the gaps, and understand where HR friction is costing you.</p>
+        </div>
+
+        <div class="step-col">
+          <span class="step-num">02</span>
+          <strong>Design</strong>
+          <p>A custom HR plan built for your stage. Not a template. Not a one-size-fits-all framework.</p>
+        </div>
+
+        <div class="step-col">
+          <span class="step-num">03</span>
+          <strong>Embed</strong>
+          <p>We operate as your internal HR partner &mdash; available to your team, attending your standups, owning the work.</p>
+        </div>
+
+        <div class="step-col">
+          <span class="step-num">04</span>
+          <strong>Evolve</strong>
+          <p>As you scale from 20 to 200 people, the model adapts. More depth where you need it, less where you don&rsquo;t.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    EDIT: SECTION 3 — WHY FRACTIONAL — Change statements
+  ============================================================ -->
+  <section class="bg-cream sec-pad">
+    <div class="sec-inner">
+
+      <!-- EDIT: Change section label -->
+      <span class="lbl fade-up">Why Fractional</span>
+
+      <!-- EDIT: Change section headline -->
+      <h2 class="section-h2 fade-up">Full capability.<br>Right-sized cost.</h2>
+
+      <div class="why-frac-list">
+
+        <!-- EDIT: Change each statement -->
+        <div class="why-frac-item slide-item">
+          <span class="why-frac-num">01</span>
+          <div class="why-frac-body">
+            <strong>You get senior HR thinking without a senior HR hire.</strong>
+            <p>A full-time CHRO is a &#8377;50&ndash;80L commitment. Fractional gives you the same strategic depth at a fraction of the cost &mdash; and without the fixed overhead.</p>
+          </div>
+        </div>
+
+        <div class="why-frac-item slide-item">
+          <span class="why-frac-num">02</span>
+          <div class="why-frac-body">
+            <strong>It scales with you &mdash; no lag, no lock-in.</strong>
+            <p>Dial up when you&rsquo;re hiring fast or going through change. Pull back when things stabilise. The model moves with the business, not against it.</p>
+          </div>
+        </div>
+
+        <div class="why-frac-item slide-item">
+          <span class="why-frac-num">03</span>
+          <div class="why-frac-body">
+            <strong>Nothing falls through the gaps.</strong>
+            <p>Compliance, culture, offer management, performance frameworks &mdash; all owned end-to-end. You focus on the business. We make sure your people function keeps up.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    EDIT: FINAL CTA — Change headline and body text
+  ============================================================ -->
+  <section class="final-cta">
+    <div class="final-cta-inner fade-up">
+
+      <!-- EDIT: Change headline -->
+      <h2>Ready to build your people function?</h2>
+
+      <!-- EDIT: Change body text -->
+      <p>No decks. No pitches. Just a 20-minute conversation about where your HR is today &mdash; and where it needs to be.</p>
+
+      <!-- EDIT: Change button text -->
+      <div class="cta-btn-group">
+        <button class="btn-primary-light open-modal">Book a 20-min discovery call</button>
+        <button class="btn-challenge-light open-form">Start a Conversation</button>
+      </div>
+
+      <!-- EDIT: Change back link text -->
+      <a href="/" class="final-back">← Back to home</a>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    EDIT: FOOTER — Update brand name, email, LinkedIn when ready
+  ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+
+      <!-- 4-column grid -->
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand -->
+        <div>
+          <div class="footer-brand-logo">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <polyline points="1,1 9,10 1,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+              <polyline points="9,1 17,10 9,19" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+            </svg>
+            Sprint People Solutions
+          </div>
+          <p class="footer-desc">Assessment-led hiring and fractional HR for startups and BFSI teams. Fewer profiles. Better hires.</p>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <span class="footer-col-head">Quick Links</span>
+          <ul class="footer-links">
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Services -->
+        <div>
+          <span class="footer-col-head">Services</span>
+          <ul class="footer-links">
+            <li><a href="/recruitment/">Recruitment</a></li>
+            <li><a href="/fractional-hr/">Fractional HR</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact Us -->
+        <div>
+          <span class="footer-col-head">Contact Us</span>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item">
+              <span class="footer-contact-icon" aria-hidden="true">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <polyline points="2,4 12,13 22,4"/>
+                </svg>
+              </span>
+              <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- CTA band -->
+      <div class="footer-cta">
+        <div>
+          <span class="footer-cta-label">Ready to hire right?</span>
+          <div class="footer-cta-h">Book a 20-min call with Shreya.</div>
+        </div>
+        <button class="btn-footer-cta open-modal">Check Calendar</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="footer-bottom">
+        <span>&copy; 2026 Sprint People Solutions</span>
+        <span class="footer-legal-links">
+          <a href="/privacy/">Privacy Policy</a>
+          <span>&middot;</span>
+          <a href="/terms/">Terms of Use</a>
+        </span>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- FORM MODAL -->
+  <div class="form-overlay" id="formOverlay">
+    <div class="form-panel">
+      <button class="form-close-btn" id="formClose" aria-label="Close">&times;</button>
+      <div id="formContent">
+        <span class="lbl">Start a Conversation</span>
+        <h3 class="form-h3">Tell us about your hiring challenge.</h3>
+        <form id="challengeForm" novalidate>
+          <div class="f-row">
+            <div class="f-group" id="fg-cname"><label for="fc-name">Full name *</label><input type="text" id="fc-name" name="name" placeholder="Priya Mehta" /><span class="f-errmsg">Please enter your name.</span></div>
+            <div class="f-group" id="fg-ccompany"><label for="fc-company">Company *</label><input type="text" id="fc-company" name="company" placeholder="Acme Fintech" /><span class="f-errmsg">Please enter your company.</span></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group" id="fg-cemail"><label for="fc-email">Work email *</label><input type="email" id="fc-email" name="email" placeholder="priya@acme.com" /><span class="f-errmsg">Please enter a valid email.</span></div>
+            <div class="f-group"><label for="fc-phone">Phone (optional)</label><input type="tel" id="fc-phone" name="phone" placeholder="+91 98765 43210" /></div>
+          </div>
+          <div class="f-group" id="fg-cneed"><label for="fc-need">What do you need? *</label><select id="fc-need" name="need"><option value="" disabled selected>— Select one</option><option value="Recruitment">Recruitment</option><option value="Fractional HR">Fractional HR</option><option value="Both">Both</option></select><span class="f-errmsg">Please select an option.</span></div>
+          <div class="f-group"><label for="fc-msg">Tell us about your challenge (optional)</label><textarea id="fc-msg" name="message" rows="3" placeholder="We're scaling from 40 to 100 people and need…"></textarea></div>
+          <button type="submit" class="btn-submit" id="formSubmit">Send message →</button>
+          <div class="form-global-err" id="formGlobalErr">Something went wrong — please email <a href="mailto:shreya@sprintpeople.in">shreya@sprintpeople.in</a> directly.</div>
+        </form>
+      </div>
+      <div class="form-success" id="formSuccess"><div class="form-success-h">Thank you.</div><p class="form-success-p">Shreya will be in touch within 24 hours.</p></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+    CALENDLY LIGHTBOX
+    CALENDLY: To update the booking link, change the data-url below
+  ============================================================ -->
+  <div class="cal-overlay" id="modalOverlay">
+    <div class="cal-inner">
+
+      <!-- Close button -->
+      <button class="cal-close" id="modalClose" aria-label="Close booking">
+        &times; <span>Close</span>
+      </button>
+
+      <!-- CALENDLY: Update data-url if your link changes -->
+      <div class="calendly-inline-widget"
+           data-url="https://calendly.com/shreya-sprintpeople/20min?hide_event_type_details=0&background_color=f5f0e8&text_color=1a1a2e&primary_color=c9a84c"
+           style="width:100%;height:100%;min-width:320px;"></div>
+
+    </div>
+  </div>
+
+
+  <script>
+
+    /* ── NAV SCROLL SHADOW + CTA REVEAL + HIDE AT BOTTOM ── */
+    (function () {
+      var nav = document.getElementById('siteNav');
+      var navCta = nav ? nav.querySelector('.nav-cta') : null;
+      var bottomInView = false;
+      window.addEventListener('scroll', function () {
+        var scrolled = window.scrollY > 60;
+        var pastHero = window.scrollY > (window.innerHeight * 0.6);
+        nav.classList.toggle('raised', scrolled);
+        if (navCta) navCta.classList.toggle('show', pastHero && !bottomInView);
+      }, { passive: true });
+      if ('IntersectionObserver' in window && navCta) {
+        var btm = document.querySelector('.final-cta');
+        if (btm) new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            bottomInView = e.isIntersecting;
+            if (bottomInView) navCta.classList.remove('show');
+          });
+        }, { threshold: 0.15 }).observe(btm);
+      }
+    }());
+
+    /* ── FORM MODAL OPEN / CLOSE + SUBMISSION ── */
+    (function () {
+      var overlay  = document.getElementById('formOverlay');
+      var closeBtn = document.getElementById('formClose');
+      var triggers = document.querySelectorAll('.open-form');
+      function openForm() { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      function closeForm() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+      triggers.forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); openForm(); }); });
+      closeBtn.addEventListener('click', closeForm);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeForm(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('open')) closeForm(); });
+      var form = document.getElementById('challengeForm');
+      var submitBtn = document.getElementById('formSubmit');
+      var formWrap = document.getElementById('formContent');
+      var success = document.getElementById('formSuccess');
+      var globalErr = document.getElementById('formGlobalErr');
+      function chk(id, gid, isEmail) {
+        var el = document.getElementById(id), g = document.getElementById(gid);
+        var v = (el.value || '').trim();
+        var ok = isEmail ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : v.length > 0;
+        el.classList.toggle('f-err', !ok); g.classList.toggle('has-err', !ok); return ok;
+      }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var valid = chk('fc-name','fg-cname',false) & chk('fc-company','fg-ccompany',false) & chk('fc-email','fg-cemail',true) & chk('fc-need','fg-cneed',false);
+        if (!valid) return;
+        submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; globalErr.classList.remove('show');
+        fetch('https://formspree.io/f/xdaynrqv', {
+          method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: document.getElementById('fc-name').value.trim(), company: document.getElementById('fc-company').value.trim(), email: document.getElementById('fc-email').value.trim(), phone: document.getElementById('fc-phone').value.trim(), need: document.getElementById('fc-need').value, message: document.getElementById('fc-msg').value.trim() })
+        }).then(function (res) {
+          if (res.ok) { formWrap.style.display = 'none'; success.classList.add('show'); } else throw new Error();
+        }).catch(function () { globalErr.classList.add('show'); submitBtn.disabled = false; submitBtn.textContent = 'Send message →'; });
+      });
+    }());
+
+    /* ── CALENDLY LIGHTBOX OPEN / CLOSE ── */
+    (function () {
+      var overlay  = document.getElementById('modalOverlay');
+      var closeBtn = document.getElementById('modalClose');
+      var triggers = document.querySelectorAll('.open-modal');
+
+      function openCal() {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeCal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      triggers.forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          openCal();
+        });
+      });
+
+      closeBtn.addEventListener('click', closeCal);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeCal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeCal();
+      });
+    }());
+
+    /* ── SCROLL FADE-UP ── */
+    (function () {
+      var els = document.querySelectorAll('.fade-up');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.10 });
+      els.forEach(function (el) { io.observe(el); });
+    }());
+
+    /* ── STEPS SLIDE IN ── */
+    (function () {
+      var items = document.querySelectorAll('.step-col');
+      if (!items.length) return;
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.10 });
+      items.forEach(function (el, i) {
+        el.style.transitionDelay = (i * 0.1) + 's';
+        io.observe(el);
+      });
+    }());
+
+    /* ── WHY FRACTIONAL SLIDE IN ── */
+    (function () {
+      var items = document.querySelectorAll('.slide-item');
+      if (!items.length) return;
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.15 });
+      items.forEach(function (el, i) {
+        el.style.transitionDelay = (i * 0.12) + 's';
+        io.observe(el);
+      });
+    }());
+
+    /* ── MOBILE NAV TOGGLE ── */
+    (function () {
+      var btn   = document.getElementById('navHam');
+      var links = document.getElementById('navLinks');
+      btn.addEventListener('click', function () {
+        var open = links.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+      links.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          links.classList.remove('open');
+          btn.classList.remove('open');
+          btn.setAttribute('aria-label', 'Open menu');
+        });
+      });
+    }());
+
+  </script>
+</body>
+</html>
