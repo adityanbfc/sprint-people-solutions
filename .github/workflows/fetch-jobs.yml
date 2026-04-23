@@ -5,22 +5,32 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   fetch-jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Fetch from Airtable and write jobs.json
         env:
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
           AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
         run: |
-          curl -s \
+          echo "Base ID length: ${#AIRTABLE_BASE_ID}"
+          echo "Token length: ${#AIRTABLE_TOKEN}"
+          curl -v \
             -H "Authorization: Bearer $AIRTABLE_TOKEN" \
-            "https://api.airtable.com/v0/$AIRTABLE_BASE_ID/Jobs?filterByFormula=%7BStatus%7D%3D'Active'&sort%5B0%5D%5Bfield%5D=Posting%20Date&sort%5B0%5D%5Bdirection%5D=desc" \
-            > jobs.json
+            "https://api.airtable.com/v0/$AIRTABLE_BASE_ID/Jobs?filterByFormula=%7BStatus%7D%3D'Active'" \
+            > jobs.json 2>&1
+          echo "jobs.json contents:"
+          cat jobs.json
 
       - name: Commit and push jobs.json
         run: |
