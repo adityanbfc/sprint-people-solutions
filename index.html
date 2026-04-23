@@ -225,6 +225,29 @@
       pointer-events: auto;
     }
 
+    /* EDIT: Open Roles highlighted nav link */
+    .nav-open-roles {
+      position: relative;
+      color: var(--gold) !important;
+      opacity: 1 !important;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s ease !important;
+    }
+    .nav-open-roles::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: var(--gold);
+      opacity: 0.5;
+      transition: opacity 0.2s ease;
+    }
+    .nav-open-roles:hover { opacity: 0.7 !important; }
+    .nav-open-roles:hover::after { opacity: 1; }
+
     /* Hamburger */
     .nav-ham {
       display: none;
@@ -1254,15 +1277,14 @@
 
       <div class="nav-links" id="navLinks">
         <!-- EDIT: Update links if section IDs change -->
+        <!-- EDIT: Open Roles link — highlighted in gold, links to mandates page -->
+        <a href="/mandates/" class="nav-open-roles">Open Roles</a>
         <a href="#services">Services</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
 
         <!-- PHASE 2: Uncomment when JD–CV Match Tool is live -->
         <!-- <a href="/match">JD&ndash;CV Match</a> -->
-
-        <!-- PHASE 3: Uncomment when Open Mandates page is live -->
-        <!-- <a href="/mandates">Open Mandates</a> -->
 
         <!-- EDIT: Change CTA button text -->
         <a href="#" class="nav-cta open-modal">Book a call</a>
@@ -1677,6 +1699,8 @@
         <div>
           <span class="footer-col-head">Quick Links</span>
           <ul class="footer-links">
+            <!-- EDIT: Open Roles footer link -->
+            <li><a href="/mandates/">Open Roles</a></li>
             <!-- EDIT: Update links if section IDs change -->
             <li><a href="#services">Services</a></li>
             <li><a href="#about">About</a></li>
