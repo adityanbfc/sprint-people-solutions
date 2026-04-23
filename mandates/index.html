@@ -568,23 +568,17 @@
        SKELETON LOADING
     ==================================================== */
     .skeleton-card {
-      border-bottom: 1px solid rgba(26,26,46,0.08);
-      padding: 32px 0;
+      height: 120px;
+      background: linear-gradient(90deg, rgba(26,26,46,0.06) 25%, rgba(26,26,46,0.10) 50%, rgba(26,26,46,0.06) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      margin-bottom: 24px;
+      border-radius: 4px;
     }
-    .skeleton-card:first-child { padding-top: 40px; }
-
-    @keyframes skeletonPulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.8; }
+    @keyframes shimmer {
+      0%   { background-position:  200% 0; }
+      100% { background-position: -200% 0; }
     }
-    .skel {
-      background: rgba(26,26,46,0.10);
-      border-radius: 2px;
-      animation: skeletonPulse 1.5s ease infinite;
-    }
-    .skel-title { height: 24px; width: 55%; margin-bottom: 16px; }
-    .skel-pills { height: 28px; width: 75%; margin-bottom: 14px; }
-    .skel-body { height: 44px; width: 100%; }
 
     /* ====================================================
        BOTTOM CTA — navy background
@@ -1001,38 +995,43 @@
 
   <script>
 
-    /* Jobs are fetched from jobs.json — auto-updated hourly from Airtable via GitHub Actions
-       EDIT: To manually override, replace fetch below with a static array */
+    /* ============================================================
+       JOBS DATA — fetched from jobs.json
+       jobs.json is auto-updated hourly from Airtable via GitHub Actions
+       EDIT: To manually trigger an update, go to GitHub Actions tab
+       and run "Fetch Jobs from Airtable" workflow manually
+    ============================================================ */
     let JOBS = [];
 
     async function loadJobs() {
       showSkeleton();
       try {
         const res = await fetch('/jobs.json');
-        if (!res.ok) throw new Error('Failed to fetch jobs');
+        if (!res.ok) throw new Error('Failed to fetch jobs.json');
         const data = await res.json();
 
-        /* Map Airtable field names to our job object format */
+        /* Map Airtable field names to job objects */
         JOBS = (data.records || [])
           .filter(r => r.fields['Status'] === 'Active')
           .map(r => ({
-            id:           r.fields['Job ID']                       || '',
-            title:        r.fields['Job Title']                    || '',
-            status:       r.fields['Status']                       || '',
-            featured:     r.fields['Featured']                     || false,
-            industry:     r.fields['Industry']                     || '',
-            function:     r.fields['Function']                     || '',
-            department:   r.fields['Department']                   || '',
-            location:     r.fields['Location']                     || '',
-            workMode:     r.fields['Select']                       || '',
-            compensation: r.fields['Compensation Range']           || '',
-            experience:   r.fields['Experience']                   || '',
-            description:  r.fields['Job Description']              || '',
-            mustHave:     r.fields['Must have Skills']             || '',
-            goodToHave:   r.fields['Good to have skills']          || '',
-            education:    r.fields['Educations / Qualification']   || '',
-            postedDate:   r.fields['Posting Date']                 || '',
-            closureDate:  r.fields['Closure Date']                 || ''
+            id:           String(r.fields['Job ID']              || ''),
+            title:        r.fields['Job Title']                  || '',
+            status:       r.fields['Status']                     || '',
+            featured:     r.fields['Featured']                   || false,
+            industry:     r.fields['Industry']                   || '',
+            function:     r.fields['Function']                   || '',
+            department:   r.fields['Department']                 || '',
+            location:     r.fields['Location']                   || '',
+            workMode:     r.fields['Select']                     || '',
+            compensation: r.fields['Compensation Range']         || '',
+            experience:   r.fields['Experience']                 || '',
+            description:  r.fields['Job Description']            || '',
+            mustHave:     r.fields['Must have Skills']           || '',
+            goodToHave:   r.fields['Good to have skills']        || '',
+            education:    r.fields['Educations / Qualification'] || '',
+            postedDate:   r.fields['Posting Date']               || '',
+            closureDate:  r.fields['Closure Date']               || '',
+            applyLink:    r.fields['Apply Link']                 || ''
           }));
 
         /* Sort: featured first, then by posted date descending */
@@ -1046,13 +1045,12 @@
         renderJobs(JOBS);
 
       } catch (err) {
-        /* Fallback: show empty state with helpful message */
         console.error('Could not load jobs:', err);
-        renderJobs([]);
+        hideSkeleton();
+        showEmptyState('Unable to load roles right now. Please check back soon.');
       }
     }
 
-    /* Run on page load */
     loadJobs();
 
 
@@ -1174,10 +1172,20 @@
     var skeletonEl  = document.getElementById('jobsSkeleton');
 
     function showSkeleton() {
-      skeletonEl.style.display = '';
-      listEl.innerHTML = '';
-      emptyEl.classList.remove('visible');
+      listEl.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
+      if (skeletonEl) skeletonEl.style.display = 'none';
+      if (emptyEl) emptyEl.classList.remove('visible');
       countEl.textContent = '';
+    }
+
+    function hideSkeleton() {
+      listEl.innerHTML = '';
+    }
+
+    function showEmptyState(msg) {
+      listEl.innerHTML = '<div class="empty-state"><span class="lbl">NO ROLES FOUND</span><h3>' +
+        (msg || 'No roles match your filters.') +
+        '</h3><p>Try adjusting your filters or check back soon.</p></div>';
     }
 
     function unique(arr) {
@@ -1238,12 +1246,6 @@
       return months[d.getMonth()] + ' ' + d.getFullYear();
     }
 
-    function makeApplyHref(job) {
-      var subject = encodeURIComponent('Application — ' + job.title + ' (' + job.id + ')');
-      var body = encodeURIComponent('Hi Shreya,\r\n\r\nI would like to apply for the ' + job.title + ' role (ID: ' + job.id + ').\r\n\r\nPlease find my CV attached.\r\n\r\nRegards,');
-      return 'mailto:shreya@sprintpeople.in?subject=' + subject + '&body=' + body;
-    }
-
     function buildSection(label, content) {
       if (!content || !content.trim()) return '';
       var items = content.split('\n').filter(function (l) { return l.trim(); });
@@ -1261,7 +1263,10 @@
     }
 
     function renderCard(job) {
-      var applyHref = makeApplyHref(job);
+      var mailSubject = encodeURIComponent('Application — ' + job.title + ' (' + job.id + ')');
+      var mailBody    = encodeURIComponent('Hi Shreya,\r\n\r\nI would like to apply for the ' + job.title + ' role (ID: ' + job.id + ').\r\n\r\nPlease find my CV attached.\r\n\r\nRegards,');
+      var mailHref    = 'mailto:shreya@sprintpeople.in?subject=' + mailSubject + '&body=' + mailBody;
+      var applyHref   = (job.applyLink && job.applyLink.trim()) ? job.applyLink.trim() : mailHref;
       var pills = [job.industry, job.location, job.workMode, job.experience].filter(Boolean).map(function (p) {
         return '<span class="job-pill">' + escapeHtml(p) + '</span>';
       }).join('');
@@ -1275,7 +1280,7 @@
       return '<div class="job-card fade-up" data-id="' + job.id + '">' +
         '<div class="job-card-top">' +
           '<span class="job-title">' + escapeHtml(job.title) + '</span>' +
-          '<a href="' + applyHref + '" class="job-apply-btn">Apply &rarr;</a>' +
+          '<a href="' + applyHref + '" class="job-apply-btn" target="_blank" rel="noopener">Apply &rarr;</a>' +
         '</div>' +
         '<div class="job-pills">' + pills + '</div>' +
         '<div class="job-meta-row">' +
@@ -1290,7 +1295,7 @@
             mustHaveHtml +
             goodToHaveHtml +
             educationHtml +
-            '<div class="job-apply-bottom"><a href="' + applyHref + '" class="job-apply-btn">Apply &rarr;</a></div>' +
+            '<div class="job-apply-bottom"><a href="' + applyHref + '" class="job-apply-btn" target="_blank" rel="noopener">Apply &rarr;</a></div>' +
           '</div>' +
         '</div>' +
       '</div>';
