@@ -1006,7 +1006,7 @@
     async function loadJobs() {
       showSkeleton();
       try {
-        const res = await fetch('/jobs.json');
+        const res = await fetch('/jobs.json?t=' + Date.now());
         if (!res.ok) throw new Error('Failed to fetch jobs.json');
         const data = await res.json();
 
@@ -1046,8 +1046,12 @@
 
       } catch (err) {
         console.error('Could not load jobs:', err);
-        hideSkeleton();
-        showEmptyState('Unable to load roles right now. Please check back soon.');
+        const list = document.getElementById('jobsList');
+        if (list) list.innerHTML = `
+          <div style="padding: 48px 0; text-align: center;">
+            <p style="color: rgba(26,26,46,0.5); font-size: 16px;">Unable to load roles right now. Please check back soon.</p>
+          </div>
+        `;
       }
     }
 
@@ -1172,10 +1176,12 @@
     var skeletonEl  = document.getElementById('jobsSkeleton');
 
     function showSkeleton() {
-      listEl.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
+      const list = document.getElementById('jobsList');
+      if (!list) return;
+      list.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
       if (skeletonEl) skeletonEl.style.display = 'none';
       if (emptyEl) emptyEl.classList.remove('visible');
-      countEl.textContent = '';
+      if (countEl) countEl.textContent = '';
     }
 
     function hideSkeleton() {
