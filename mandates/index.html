@@ -234,6 +234,8 @@
     .mandates-hero {
       background: var(--cream);
       padding: 108px var(--g) 96px;
+      position: relative;
+      overflow: hidden;
     }
     .mandates-hero-inner {
       max-width: var(--max-w);
@@ -385,7 +387,7 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .job-title {
@@ -397,22 +399,40 @@
       line-height: 1.15;
     }
 
-    .job-apply-btn {
+    .job-toggle {
       flex-shrink: 0;
+      background: none;
+      border: 1px solid rgba(26,26,46,0.18);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.65;
+      padding: 6px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .job-toggle:hover {
+      border-color: var(--navy);
+      opacity: 1;
+    }
+
+    .job-apply-btn {
+      display: inline-block;
       background: var(--navy);
       color: var(--cream);
       font-family: var(--font-body);
-      font-weight: 400;
       font-size: 15px;
-      padding: 10px 22px;
+      font-weight: 400;
+      padding: 14px 32px;
       border: none;
       cursor: pointer;
       transition: opacity 0.2s ease;
-      white-space: nowrap;
+      letter-spacing: 0.01em;
       text-decoration: none;
-      display: inline-block;
     }
-    .job-apply-btn:hover { opacity: 0.8; }
+    .job-apply-btn:hover { opacity: 0.85; }
 
     .job-pills {
       display: flex;
@@ -464,19 +484,6 @@
       margin-bottom: 10px;
     }
 
-    .job-toggle {
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: var(--font-body);
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--gold);
-      cursor: pointer;
-      transition: opacity 0.2s ease;
-      letter-spacing: 0.01em;
-    }
-    .job-toggle:hover { opacity: 0.7; }
 
     /* Expanded details */
     .job-details {
@@ -541,14 +548,57 @@
     }
 
     .job-apply-bottom {
-      margin-top: 24px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(26,26,46,0.08);
+    }
+
+    /* Job details grid */
+    .job-details-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid rgba(26,26,46,0.08);
+      margin-bottom: 32px;
+    }
+    .job-detail-item {
+      padding: 16px 20px;
+      border-right: 1px solid rgba(26,26,46,0.08);
+      border-bottom: 1px solid rgba(26,26,46,0.08);
+    }
+    .job-detail-item:nth-child(4n) { border-right: none; }
+    .job-detail-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .job-detail-value {
+      display: block;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+    .job-comp-val {
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .job-divider {
+      border: none;
+      border-top: 1px solid rgba(26,26,46,0.08);
+      margin: 0 0 28px;
     }
 
     @media (max-width: 768px) {
       .jobs-section { padding: 0 var(--gm) 72px; }
-      .job-card-top { flex-direction: column; gap: 12px; }
+      .job-details-grid { grid-template-columns: repeat(2, 1fr); }
+      .job-detail-item:nth-child(4n) { border-right: 1px solid rgba(26,26,46,0.08); }
+      .job-detail-item:nth-child(2n) { border-right: none; }
       .job-apply-btn { width: 100%; text-align: center; }
-      .job-apply-bottom .job-apply-btn { width: 100%; text-align: center; }
     }
 
     /* ====================================================
@@ -774,21 +824,22 @@
     EDIT: Change label, headline, sub-line, and last-updated date
   ============================================================ -->
   <section class="mandates-hero">
-    <div class="mandates-hero-inner">
+  <canvas id="mandatesCanvas" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+  <div class="mandates-hero-inner" style="position:relative;z-index:1;">
 
       <!-- EDIT: Change section label -->
-      <span class="lbl h-anim h-anim-1">Open Roles</span>
+      <span class="lbl h-anim h-anim-1">Open Mandates</span>
 
       <!-- EDIT: Change hero headline -->
       <h1 class="mandates-h1 h-anim h-anim-2">Roles we&rsquo;re currently hiring for.</h1>
 
       <!-- EDIT: Change hero sub-line -->
-      <p class="mandates-hero-sub h-anim h-anim-3">Every role listed here is an active mandate &mdash; assessed, curated, and personally managed by Shreya. No speculative listings.</p>
+      <p class="mandates-hero-sub h-anim h-anim-3">Every role listed here is an active mandate.</p>
 
       <!-- EDIT: Update this date when you add new roles -->
-      <p class="mandates-hero-note h-anim h-anim-4">Updated regularly. Last updated: May 2026</p>
+      <p class="mandates-hero-note h-anim h-anim-4" id="lastUpdated">Updated regularly.</p>
 
-    </div>
+  </div>
   </section>
 
 
@@ -844,27 +895,6 @@
   </section>
 
 
-  <!-- ============================================================
-    BOTTOM CTA — navy background
-    EDIT: Change CTA headline and body text
-  ============================================================ -->
-  <section class="mandates-cta">
-    <div class="mandates-cta-inner">
-
-      <!-- EDIT: Change label -->
-      <span class="lbl" style="text-align:center;">For Candidates</span>
-
-      <!-- EDIT: Change headline -->
-      <h2>Don&rsquo;t see a role that fits?</h2>
-
-      <!-- EDIT: Change body text -->
-      <p>Send your CV directly and we&rsquo;ll reach out when a relevant role opens up.</p>
-
-      <!-- EDIT: Update mailto link if email changes -->
-      <a href="mailto:shreya@sprintpeople.in?subject=CV%20Submission%20%E2%80%94%20Sprint%20People%20Solutions" class="btn-cv">Send your CV</a>
-
-    </div>
-  </section>
 
 
   <!-- ============================================================
@@ -1042,6 +1072,14 @@
         });
 
         populateFilters();
+
+        var lastUpdatedEl = document.getElementById('lastUpdated');
+        if (lastUpdatedEl) {
+          var now = new Date();
+          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          lastUpdatedEl.textContent = 'Last updated: ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+        }
+
         renderJobs(JOBS);
 
       } catch (err) {
@@ -1054,6 +1092,60 @@
         `;
       }
     }
+
+    /* ── MANDATES HERO CANVAS ANIMATION ── */
+    (function () {
+      var canvas = document.getElementById('mandatesCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var W, H;
+
+      function resize() {
+        W = canvas.width  = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      var circles = [
+        { x: W*0.15, y: H*0.3,  r: 320, vx: 0.18, vy: 0.12, color: '#1A1A2E', a: 0.028 },
+        { x: W*0.7,  y: H*0.6,  r: 400, vx:-0.14, vy: 0.16, color: '#1A1A2E', a: 0.022 },
+        { x: W*0.4,  y: H*0.8,  r: 280, vx: 0.20, vy:-0.10, color: '#C9A84C', a: 0.038 },
+        { x: W*0.85, y: H*0.2,  r: 360, vx:-0.16, vy: 0.14, color: '#1A1A2E', a: 0.018 },
+        { x: W*0.3,  y: H*0.5,  r: 240, vx: 0.12, vy:-0.18, color: '#C9A84C', a: 0.032 }
+      ];
+      var anchor = { x: 0.9, y: 0.1, r: 560, color: '#C9A84C', a: 0.025 };
+
+      function frame() {
+        ctx.clearRect(0, 0, W, H);
+        ctx.save();
+        ctx.globalAlpha = anchor.a;
+        ctx.strokeStyle = anchor.color;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(W * anchor.x, H * anchor.y, anchor.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+        for (var i = 0; i < circles.length; i++) {
+          var c = circles[i];
+          c.x += c.vx; c.y += c.vy;
+          if (c.x - c.r < 0)  { c.x = c.r;   c.vx =  Math.abs(c.vx); }
+          if (c.x + c.r > W)  { c.x = W-c.r; c.vx = -Math.abs(c.vx); }
+          if (c.y - c.r < 0)  { c.y = c.r;   c.vy =  Math.abs(c.vy); }
+          if (c.y + c.r > H)  { c.y = H-c.r; c.vy = -Math.abs(c.vy); }
+          ctx.save();
+          ctx.globalAlpha = c.a;
+          ctx.strokeStyle = c.color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }());
 
     loadJobs();
 
@@ -1270,12 +1362,25 @@
 
     function renderCard(job) {
       var mailSubject = encodeURIComponent('Application — ' + job.title + ' (' + job.id + ')');
-      var mailBody    = encodeURIComponent('Hi Shreya,\r\n\r\nI would like to apply for the ' + job.title + ' role (ID: ' + job.id + ').\r\n\r\nPlease find my CV attached.\r\n\r\nRegards,');
+      var mailBody    = encodeURIComponent('Hi,\r\n\r\nI would like to apply for the ' + job.title + ' role (ID: ' + job.id + ').\r\n\r\nPlease find my CV attached.\r\n\r\nRegards,');
       var mailHref    = 'mailto:shreya@sprintpeople.in?subject=' + mailSubject + '&body=' + mailBody;
-      var applyHref   = (job.applyLink && job.applyLink.trim()) ? job.applyLink.trim() : mailHref;
-      var pills = [job.industry, job.location, job.workMode, job.experience].filter(Boolean).map(function (p) {
+      var applyHref   = (job.applyLink && job.applyLink.trim() && !job.applyLink.includes('yourformid')) ? job.applyLink.trim() : mailHref;
+
+      var pills = [job.location, job.experience, job.workMode].filter(Boolean).map(function (p) {
         return '<span class="job-pill">' + escapeHtml(p) + '</span>';
       }).join('');
+
+      var detailsGrid =
+        '<div class="job-details-grid">' +
+          (job.industry     ? '<div class="job-detail-item"><span class="job-detail-label">Industry</span><span class="job-detail-value">' + escapeHtml(job.industry) + '</span></div>' : '') +
+          (job.location     ? '<div class="job-detail-item"><span class="job-detail-label">Location</span><span class="job-detail-value">' + escapeHtml(job.location) + '</span></div>' : '') +
+          (job.workMode     ? '<div class="job-detail-item"><span class="job-detail-label">Role Type</span><span class="job-detail-value">' + escapeHtml(job.workMode) + '</span></div>' : '') +
+          (job.experience   ? '<div class="job-detail-item"><span class="job-detail-label">Experience</span><span class="job-detail-value">' + escapeHtml(job.experience) + '</span></div>' : '') +
+          (job.compensation ? '<div class="job-detail-item"><span class="job-detail-label">Salary Range</span><span class="job-detail-value job-comp-val">' + escapeHtml(job.compensation) + '</span></div>' : '') +
+          (job.department   ? '<div class="job-detail-item"><span class="job-detail-label">Department</span><span class="job-detail-value">' + escapeHtml(job.department) + '</span></div>' : '') +
+          (job.postedDate   ? '<div class="job-detail-item"><span class="job-detail-label">Posted</span><span class="job-detail-value">' + formatDate(job.postedDate) + '</span></div>' : '') +
+          (job.closureDate  ? '<div class="job-detail-item"><span class="job-detail-label">Apply By</span><span class="job-detail-value">' + formatDate(job.closureDate) + '</span></div>' : '') +
+        '</div>';
 
       var mustHaveHtml   = buildSection('Must Have', job.mustHave);
       var goodToHaveHtml = buildSection('Good to Have', job.goodToHave);
@@ -1284,24 +1389,27 @@
         : '';
 
       return '<div class="job-card fade-up" data-id="' + job.id + '">' +
+
         '<div class="job-card-top">' +
           '<span class="job-title">' + escapeHtml(job.title) + '</span>' +
-          '<a href="' + applyHref + '" class="job-apply-btn" target="_blank" rel="noopener">Apply &rarr;</a>' +
+          '<button class="job-toggle" data-id="' + job.id + '">View details &darr;</button>' +
         '</div>' +
+
         '<div class="job-pills">' + pills + '</div>' +
-        '<div class="job-meta-row">' +
-          '<span class="job-comp">' + escapeHtml(job.compensation || '') + '</span>' +
-          '<span class="job-posted">' + (job.postedDate ? 'Posted ' + formatDate(job.postedDate) : '') + '</span>' +
-        '</div>' +
+
         '<p class="job-desc-preview">' + escapeHtml(job.description || '') + '</p>' +
-        '<button class="job-toggle" data-id="' + job.id + '">View details &darr;</button>' +
+
         '<div class="job-details" id="details-' + job.id + '">' +
           '<div class="job-details-inner">' +
-            '<p class="job-full-desc">' + escapeHtml(job.description || '') + '</p>' +
+            detailsGrid +
+            '<hr class="job-divider">' +
+            (job.description ? '<span class="job-section-label">About the Role</span><p class="job-full-desc">' + escapeHtml(job.description) + '</p>' : '') +
             mustHaveHtml +
             goodToHaveHtml +
             educationHtml +
-            '<div class="job-apply-bottom"><a href="' + applyHref + '" class="job-apply-btn" target="_blank" rel="noopener">Apply &rarr;</a></div>' +
+            '<div class="job-apply-bottom">' +
+              '<a href="' + applyHref + '" class="job-apply-btn" target="_blank" rel="noopener">Apply for this role &rarr;</a>' +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</div>';
