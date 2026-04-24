@@ -706,10 +706,14 @@
        INDUSTRIES — white background
     ==================================================== */
     .industries {
+      position: relative;
+      overflow: hidden;
       background: var(--white);
       padding: 120px var(--g);
     }
     .industries-inner {
+      position: relative;
+      z-index: 1;
       max-width: var(--max-w);
       margin: 0 auto;
     }
@@ -858,12 +862,12 @@
     }
 
     /* ====================================================
-       CONTACT — cream background
+       CONTACT — white background
     ==================================================== */
     .contact {
       position: relative;
       overflow: hidden;
-      background: var(--cream);
+      background: var(--white);
       padding: 120px var(--g);
     }
     .contact-inner {
@@ -1478,6 +1482,7 @@
     EDIT: Change section headline and three industry cards
   ============================================================ -->
   <section class="industries" id="industries">
+    <canvas class="sec-canvas" id="industriesCanvas" aria-hidden="true"></canvas>
     <div class="industries-inner">
 
       <div class="fade-up">
@@ -2162,6 +2167,11 @@
       function resize() {
         W = canvas.width  = canvas.offsetWidth;
         H = canvas.height = canvas.offsetHeight;
+        /* Spread positions proportionally across the full canvas */
+        for (var i = 0; i < shapes.length; i++) {
+          shapes[i].x = shapes[i].xFrac * W;
+          shapes[i].y = shapes[i].yFrac * H;
+        }
       }
       resize();
       window.addEventListener('resize', resize);
@@ -2192,54 +2202,65 @@
 
     /* PROCESS — floating rectangles on navy */
     initCanvas('processCanvas', [
-      { r: 90, w: 220, color: '#FFFFFF', a: 0.08, x: 120, y: 100, vx:  0.16, vy:  0.10, rot: 0,    vr:  0.002 },
-      { r: 90, w: 300, color: '#C9A84C', a: 0.12, x: 600, y: 280, vx: -0.12, vy:  0.13, rot: 0.15, vr: -0.002 },
-      { r: 60, w: 180, color: '#FFFFFF', a: 0.08, x: 900, y:  80, vx:  0.14, vy:  0.09, rot:-0.10, vr:  0.003 },
-      { r: 70, w: 240, color: '#C9A84C', a: 0.12, x: 300, y: 420, vx: -0.10, vy: -0.12, rot: 0.20, vr:  0.002 },
-      { r: 50, w: 160, color: '#FFFFFF', a: 0.08, x:1050, y: 350, vx: -0.15, vy:  0.11, rot:-0.05, vr: -0.003 },
+      { r: 90, w: 220, color: '#C9A84C', a: 0.26, xFrac: 0.08, yFrac: 0.25, vx:  0.16, vy:  0.10, rot: 0,    vr:  0.002 },
+      { r: 90, w: 300, color: '#C9A84C', a: 0.26, xFrac: 0.30, yFrac: 0.60, vx: -0.12, vy:  0.13, rot: 0.15, vr: -0.002 },
+      { r: 60, w: 180, color: '#C9A84C', a: 0.26, xFrac: 0.52, yFrac: 0.18, vx:  0.14, vy:  0.09, rot:-0.10, vr:  0.003 },
+      { r: 70, w: 240, color: '#C9A84C', a: 0.26, xFrac: 0.72, yFrac: 0.72, vx: -0.10, vy: -0.12, rot: 0.20, vr:  0.002 },
+      { r: 50, w: 160, color: '#C9A84C', a: 0.26, xFrac: 0.91, yFrac: 0.50, vx: -0.15, vy:  0.11, rot:-0.05, vr: -0.003 },
     ], function(ctx, s) {
       ctx.strokeRect(-s.w / 2, -s.r / 2, s.w, s.r);
     });
 
-    /* FOUNDER — floating hexagons on cream */
+    /* FOUNDER — floating circles on cream (smaller than hero) */
     initCanvas('founderCanvas', [
-      { r: 100, color: '#1A1A2E', a: 0.08, x: 100, y: 150, vx:  0.13, vy:  0.10, rot: 0,   vr:  0.002 },
-      { r: 130, color: '#C9A84C', a: 0.11, x: 500, y:  80, vx: -0.11, vy:  0.14, rot: 0.5, vr: -0.003 },
-      { r:  80, color: '#1A1A2E', a: 0.08, x: 850, y: 320, vx:  0.15, vy: -0.12, rot: 0.3, vr:  0.003 },
-      { r: 110, color: '#C9A84C', a: 0.11, x: 250, y: 400, vx: -0.14, vy:  0.09, rot: 1.0, vr:  0.002 },
-      { r:  90, color: '#1A1A2E', a: 0.08, x:1000, y: 180, vx: -0.12, vy:  0.13, rot: 0.8, vr: -0.002 },
+      { r:  42, color: '#C9A84C', a: 0.25, xFrac: 0.08, yFrac: 0.30, vx:  0.13, vy:  0.10, rot: 0, vr: 0 },
+      { r: 165, color: '#C9A84C', a: 0.25, xFrac: 0.30, yFrac: 0.16, vx: -0.11, vy:  0.14, rot: 0, vr: 0 },
+      { r:  62, color: '#C9A84C', a: 0.25, xFrac: 0.52, yFrac: 0.65, vx:  0.15, vy: -0.12, rot: 0, vr: 0 },
+      { r: 128, color: '#C9A84C', a: 0.25, xFrac: 0.73, yFrac: 0.35, vx: -0.14, vy:  0.09, rot: 0, vr: 0 },
+      { r:  85, color: '#C9A84C', a: 0.25, xFrac: 0.91, yFrac: 0.70, vx: -0.12, vy:  0.13, rot: 0, vr: 0 },
     ], function(ctx, s) {
       ctx.beginPath();
-      for (var j = 0; j < 6; j++) {
-        var a = (Math.PI / 3) * j;
-        var px = s.r * Math.cos(a);
-        var py = s.r * Math.sin(a);
-        if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-      }
-      ctx.closePath();
+      ctx.arc(0, 0, s.r, 0, Math.PI * 2);
       ctx.stroke();
     });
 
-    /* SERVICES — floating wide rectangles on navy */
+    /* SERVICES — floating squares on navy */
     initCanvas('servicesCanvas', [
-      { r: 90, w: 220, color: '#FFFFFF', a: 0.10, x: 120, y: 100, vx:  0.16, vy:  0.10, rot: 0,    vr:  0.002 },
-      { r: 90, w: 300, color: '#C9A84C', a: 0.14, x: 600, y: 280, vx: -0.12, vy:  0.13, rot: 0.15, vr: -0.002 },
-      { r: 60, w: 180, color: '#FFFFFF', a: 0.10, x: 900, y:  80, vx:  0.14, vy:  0.09, rot:-0.10, vr:  0.003 },
-      { r: 70, w: 240, color: '#C9A84C', a: 0.14, x: 300, y: 420, vx: -0.10, vy: -0.12, rot: 0.20, vr:  0.002 },
-      { r: 50, w: 160, color: '#FFFFFF', a: 0.10, x:1050, y: 350, vx: -0.15, vy:  0.11, rot:-0.05, vr: -0.003 },
-      { r: 80, w: 260, color: '#C9A84C', a: 0.14, x: 750, y: 480, vx:  0.11, vy: -0.10, rot: 0.30, vr:  0.002 },
+      { r: 90, color: '#C9A84C', a: 0.26, xFrac: 0.07, yFrac: 0.22, vx:  0.16, vy:  0.10, rot: 0,    vr:  0.002 },
+      { r: 90, color: '#C9A84C', a: 0.26, xFrac: 0.25, yFrac: 0.68, vx: -0.12, vy:  0.13, rot: 0.15, vr: -0.002 },
+      { r: 60, color: '#C9A84C', a: 0.26, xFrac: 0.45, yFrac: 0.15, vx:  0.14, vy:  0.09, rot:-0.10, vr:  0.003 },
+      { r: 70, color: '#C9A84C', a: 0.26, xFrac: 0.62, yFrac: 0.60, vx: -0.10, vy: -0.12, rot: 0.20, vr:  0.002 },
+      { r: 50, color: '#C9A84C', a: 0.26, xFrac: 0.78, yFrac: 0.32, vx: -0.15, vy:  0.11, rot:-0.05, vr: -0.003 },
+      { r: 80, color: '#C9A84C', a: 0.26, xFrac: 0.93, yFrac: 0.75, vx:  0.11, vy: -0.10, rot: 0.30, vr:  0.002 },
     ], function(ctx, s) {
-      ctx.strokeRect(-s.w / 2, -s.r / 2, s.w, s.r);
+      ctx.strokeRect(-s.r, -s.r, s.r * 2, s.r * 2);
+    });
+
+    /* INDUSTRIES — floating trapezoids on white */
+    initCanvas('industriesCanvas', [
+      { r:  90, color: '#C9A84C', a: 0.25, xFrac: 0.08, yFrac: 0.28, vx:  0.13, vy:  0.10, rot: 0,   vr:  0.002 },
+      { r: 110, color: '#C9A84C', a: 0.25, xFrac: 0.30, yFrac: 0.16, vx: -0.11, vy:  0.13, rot: 0.4, vr: -0.002 },
+      { r:  75, color: '#C9A84C', a: 0.25, xFrac: 0.52, yFrac: 0.68, vx:  0.14, vy: -0.11, rot: 0.2, vr:  0.003 },
+      { r: 100, color: '#C9A84C', a: 0.25, xFrac: 0.73, yFrac: 0.30, vx: -0.12, vy:  0.09, rot: 0.9, vr:  0.002 },
+      { r:  85, color: '#C9A84C', a: 0.25, xFrac: 0.91, yFrac: 0.65, vx: -0.10, vy:  0.12, rot: 0.6, vr: -0.002 },
+    ], function(ctx, s) {
+      ctx.beginPath();
+      ctx.moveTo(-s.r * 0.55, -s.r);
+      ctx.lineTo( s.r * 0.55, -s.r);
+      ctx.lineTo( s.r,         s.r);
+      ctx.lineTo(-s.r,         s.r);
+      ctx.closePath();
+      ctx.stroke();
     });
 
     /* PROBLEM — floating hexagons on cream */
     initCanvas('problemCanvas', [
-      { r: 110, color: '#1A1A2E', a: 0.07, x:  80, y: 120, vx:  0.12, vy:  0.09, rot: 0,   vr:  0.002 },
-      { r: 140, color: '#C9A84C', a: 0.09, x: 480, y:  60, vx: -0.10, vy:  0.12, rot: 0.4, vr: -0.002 },
-      { r:  85, color: '#1A1A2E', a: 0.07, x: 920, y: 280, vx:  0.14, vy: -0.11, rot: 0.2, vr:  0.003 },
-      { r: 120, color: '#C9A84C', a: 0.09, x: 230, y: 380, vx: -0.13, vy:  0.08, rot: 0.9, vr:  0.002 },
-      { r:  95, color: '#1A1A2E', a: 0.07, x:1050, y: 160, vx: -0.11, vy:  0.12, rot: 0.7, vr: -0.002 },
-      { r: 105, color: '#C9A84C', a: 0.09, x: 700, y: 350, vx:  0.09, vy: -0.10, rot: 1.1, vr:  0.003 },
+      { r: 110, color: '#C9A84C', a: 0.25, xFrac: 0.07, yFrac: 0.22, vx:  0.12, vy:  0.09, rot: 0,   vr:  0.002 },
+      { r: 140, color: '#C9A84C', a: 0.25, xFrac: 0.25, yFrac: 0.60, vx: -0.10, vy:  0.12, rot: 0.4, vr: -0.002 },
+      { r:  85, color: '#C9A84C', a: 0.25, xFrac: 0.45, yFrac: 0.15, vx:  0.14, vy: -0.11, rot: 0.2, vr:  0.003 },
+      { r: 120, color: '#C9A84C', a: 0.25, xFrac: 0.63, yFrac: 0.70, vx: -0.13, vy:  0.08, rot: 0.9, vr:  0.002 },
+      { r:  95, color: '#C9A84C', a: 0.25, xFrac: 0.78, yFrac: 0.28, vx: -0.11, vy:  0.12, rot: 0.7, vr: -0.002 },
+      { r: 105, color: '#C9A84C', a: 0.25, xFrac: 0.93, yFrac: 0.60, vx:  0.09, vy: -0.10, rot: 1.1, vr:  0.003 },
     ], function(ctx, s) {
       ctx.beginPath();
       for (var j = 0; j < 6; j++) {
@@ -2252,13 +2273,13 @@
       ctx.stroke();
     });
 
-    /* CONTACT — floating pentagons on cream */
+    /* CONTACT — floating pentagons on white */
     initCanvas('contactCanvas', [
-      { r:  90, color: '#1A1A2E', a: 0.08, x: 120, y: 100, vx:  0.14, vy:  0.10, rot: 0,   vr:  0.003 },
-      { r: 120, color: '#C9A84C', a: 0.11, x: 550, y: 250, vx: -0.12, vy:  0.13, rot: 0.5, vr: -0.002 },
-      { r:  80, color: '#1A1A2E', a: 0.08, x: 900, y:  80, vx:  0.11, vy:  0.12, rot: 0.3, vr:  0.004 },
-      { r: 100, color: '#C9A84C', a: 0.11, x: 280, y: 340, vx: -0.13, vy: -0.10, rot: 1.2, vr:  0.002 },
-      { r:  70, color: '#1A1A2E', a: 0.08, x:1050, y: 300, vx: -0.10, vy:  0.14, rot: 0.6, vr: -0.003 },
+      { r:  90, color: '#C9A84C', a: 0.25, xFrac: 0.08, yFrac: 0.22, vx:  0.14, vy:  0.10, rot: 0,   vr:  0.003 },
+      { r: 120, color: '#C9A84C', a: 0.25, xFrac: 0.28, yFrac: 0.65, vx: -0.12, vy:  0.13, rot: 0.5, vr: -0.002 },
+      { r:  80, color: '#C9A84C', a: 0.25, xFrac: 0.52, yFrac: 0.18, vx:  0.11, vy:  0.12, rot: 0.3, vr:  0.004 },
+      { r: 100, color: '#C9A84C', a: 0.25, xFrac: 0.73, yFrac: 0.70, vx: -0.13, vy: -0.10, rot: 1.2, vr:  0.002 },
+      { r:  70, color: '#C9A84C', a: 0.25, xFrac: 0.91, yFrac: 0.40, vx: -0.10, vy:  0.14, rot: 0.6, vr: -0.003 },
     ], function(ctx, s) {
       ctx.beginPath();
       for (var j = 0; j < 5; j++) {
@@ -2270,6 +2291,7 @@
       ctx.closePath();
       ctx.stroke();
     });
+
 
   </script>
 </body>
